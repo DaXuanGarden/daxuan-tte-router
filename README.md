@@ -38,9 +38,10 @@
 
 ## 快速开始
 
-本地安装/发现入口：
+安装/发现入口：
 
 ```bash
+npx skills add DaXuanGarden/daxuan-tte-router --skill daxuan-tte-router
 npx skills add /home/daxuan/20260907_Clinical_Database/skills/daxuan-tte-router --skill daxuan-tte-router
 ```
 
