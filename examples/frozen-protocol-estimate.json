@@ -1,0 +1,53 @@
+{
+  "intent": "analysis",
+  "stage": "analysis",
+  "selected": [
+    "tte-estimate"
+  ],
+  "supporting_skills": [
+    "clinical-research-analysis-framework"
+  ],
+  "reasons": {
+    "tte-estimate": {
+      "why": "creates or runs the prespecified effect estimate after the protocol is frozen",
+      "matched": [
+        "per-protocol"
+      ]
+    }
+  },
+  "evidence_tasks": [],
+  "evidence_sources": [],
+  "evidence_gaps": [],
+  "design_card": {
+    "clinical_decision": "required",
+    "population": "required",
+    "treatment_strategy_A": "required",
+    "treatment_strategy_B": "required",
+    "outcome": "required",
+    "follow_up": "required",
+    "summary_measure": "required",
+    "intercurrent_events": "required",
+    "estimand_status": "frozen",
+    "identifying_assumptions": "required",
+    "data_support": "required",
+    "literature_evidence": "recommended"
+  },
+  "prerequisites": [],
+  "next_handoff": "check-emulation",
+  "stop_condition": "Resolve the listed prerequisites and confirm the selected artifact before advancing.",
+  "run_status": "suggested",
+  "confidence": "medium",
+  "unmatched": "协议已冻结，完成数据映射并估计 per-protocol effect。",
+  "pipeline": {
+    "state_artifact": "research-state.json",
+    "handoff_artifacts": [
+      "route-card.json",
+      "evidence-map.json",
+      "design-card.json",
+      "pilot-report.md",
+      "feedback.md"
+    ],
+    "pilot_required_before_estimate": true,
+    "execution_mode": "suggested"
+  }
+}

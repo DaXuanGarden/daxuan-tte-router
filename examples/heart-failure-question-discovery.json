@@ -1,0 +1,59 @@
+{
+  "intent": "question_discovery",
+  "stage": "discovery",
+  "selected": [],
+  "supporting_skills": [
+    "clinical-research-session",
+    "multi-database-literature-collector",
+    "auto-inspire-literature-workflow-orchestrator",
+    "medical-research-gap-finder",
+    "auto-inspire-scientific-problem-selection",
+    "auto-inspire-paper-topic-discovery",
+    "auto-inspire-academic-literature-search"
+  ],
+  "reasons": {},
+  "evidence_tasks": [
+    "Find one direct clinical TTE example and extract population, strategy, outcome, horizon, and estimand.",
+    "Find one methods example for the proposed time-zero, dynamic strategy, or competing-event problem.",
+    "Find one boundary or counterexample and record why its design or data cannot be copied."
+  ],
+  "evidence_sources": [],
+  "evidence_gaps": [
+    "No literature was fetched by this keyword router; record database, query, date, and verified sources before claiming novelty.",
+    "Confirm that the treatment action, decision time, outcome, and required longitudinal measurements are observable in the chosen database."
+  ],
+  "design_card": {
+    "clinical_decision": "required",
+    "population": "required",
+    "treatment_strategy_A": "required",
+    "treatment_strategy_B": "required",
+    "outcome": "required",
+    "follow_up": "required",
+    "summary_measure": "required",
+    "intercurrent_events": "required",
+    "estimand_status": "draft",
+    "identifying_assumptions": "required",
+    "data_support": "required",
+    "literature_evidence": "required"
+  },
+  "prerequisites": [
+    "Complete the evidence tasks and design card before freezing the target-trial protocol."
+  ],
+  "next_handoff": "target-trial",
+  "stop_condition": "Resolve the listed prerequisites and confirm the selected artifact before advancing.",
+  "run_status": "suggested",
+  "confidence": "high",
+  "unmatched": "使用 TTE 路由，先查阅心衰肾功能恶化后的利尿策略文献，找研究空白并生成候选 estimand。",
+  "pipeline": {
+    "state_artifact": "research-state.json",
+    "handoff_artifacts": [
+      "route-card.json",
+      "evidence-map.json",
+      "design-card.json",
+      "pilot-report.md",
+      "feedback.md"
+    ],
+    "pilot_required_before_estimate": true,
+    "execution_mode": "suggested"
+  }
+}
