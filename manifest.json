@@ -1,0 +1,67 @@
+{
+  "name": "daxuan-tte-router",
+  "version": "0.3.0",
+  "owner": "20260907_Clinical_Database",
+  "updated_at": "2026-10-20",
+  "status": "local-development",
+  "maturity_tier": "library",
+  "lifecycle_stage": "evidence-aware-routing",
+  "context_budget_tier": "production",
+  "upstream_inspiration": "TTE_CC by Jacob Jameson",
+  "upstream_sync": {
+    "source": "https://github.com/jacobjameson/TTE_CC",
+    "relationship": "routes installed specialist skills; does not copy their implementation"
+  },
+  "intent": {
+    "job_to_be_done": "Turn a clinical research question into an evidence-aware estimand, data-support gate, and minimal target-trial-emulation specialist route.",
+    "target_users": [
+      "clinical researchers in this project",
+      "TTE analysts"
+    ],
+    "inputs": [
+      "clinical research question or topic",
+      "literature corpus or search request",
+      "target-trial protocol or draft",
+      "available database and data semantics",
+      "current analysis stage"
+    ],
+    "outputs": [
+      "intent classification",
+      "selected TTE specialists",
+      "supporting research skills",
+      "evidence tasks and sources",
+      "estimand/design card",
+      "stage handoff",
+      "protocol/data artifact",
+      "data gaps and validity threats",
+      "run status"
+    ],
+    "exclusions": [
+      "unverified novelty claims",
+      "new estimator invention",
+      "unrequested cohort mutation",
+      "clinical threshold selection from outcomes",
+      "journal acceptance claims",
+      "publication"
+    ],
+    "qiaomu_defaults": {
+      "language": "zh-CN",
+      "evidence_boundary": "claim only what was read or executed",
+      "primary_principle": "clinical question before method",
+      "routing_principle": "route the smallest useful set; clinical context overrides keyword suggestions"
+    }
+  },
+  "release_gates": {
+    "local": [
+      "validate_skill",
+      "route unit tests",
+      "trigger_eval",
+      "export_skill_ir"
+    ],
+    "publish": [
+      "explicit user request",
+      "PR workflow",
+      "release and clean-install evidence"
+    ]
+  }
+}

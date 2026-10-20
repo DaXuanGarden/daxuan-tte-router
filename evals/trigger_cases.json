@@ -1,0 +1,118 @@
+{
+  "description_required_concepts": [
+    "skill",
+    "source_material",
+    "authoring_action"
+  ],
+  "positive_concepts": {
+    "skill": [
+      "skill",
+      "TTE",
+      "目标试验",
+      "目标模拟",
+      "target trial"
+    ],
+    "source_material": [
+      "protocol",
+      "研究问题",
+      "研究",
+      "数据",
+      "分析",
+      "方案",
+      "study",
+      "emulation",
+      "选题",
+      "研究空白",
+      "文献",
+      "estimand",
+      "科学问题"
+    ],
+    "authoring_action": [
+      "选择",
+      "路由",
+      "审核",
+      "评估",
+      "定义",
+      "分析",
+      "报告",
+      "使用",
+      "匹配",
+      "route",
+      "check",
+      "estimate",
+      "检索",
+      "反思",
+      "选择统计方法",
+      "设计"
+    ]
+  },
+  "negative_patterns": [
+    "创建一个交通仿真",
+    "翻译这段文字",
+    "普通文档排版",
+    "不涉及临床研究或 TTE"
+  ],
+  "recommended_threshold": 0.34,
+  "should_trigger": [
+    {
+      "text": "使用 TTE 路由 Skill，先把心衰问题写成目标试验协议。",
+      "family": "protocol"
+    },
+    {
+      "text": "审核这个研究的 time zero、持续利尿策略和竞争事件。",
+      "family": "design"
+    },
+    {
+      "text": "协议已经冻结，请选择 tte-estimate、check-emulation 和 tte-report。",
+      "family": "analysis"
+    },
+    {
+      "text": "MIMIC 和 eICU 的目标试验模拟应该怎样路由到 TTE_CC？",
+      "family": "database"
+    },
+    {
+      "text": "用目标试验方法评估心衰利尿治疗的混杂和共同支持。",
+      "family": "causal"
+    },
+    {
+      "text": "使用 TTE 路由，先查阅心衰肾功能恶化后的利尿策略文献，找研究空白并生成候选 estimand。",
+      "family": "question-discovery"
+    },
+    {
+      "text": "使用 TTE 路由，同一个人在多个入组时点可能属于不同策略，请判断 sequential trial 和 cloning 如何路由。",
+      "family": "sequential-cloning"
+    },
+    {
+      "text": "使用 TTE，协议已冻结，请选择竞争风险和 per-protocol effect 的统计方法。",
+      "family": "method-selection"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "帮我创建一个交通仿真 Skill。",
+      "family": "domain-boundary"
+    },
+    {
+      "text": "翻译这段英文摘要。",
+      "family": "translation"
+    },
+    {
+      "text": "普通地整理一个 Markdown 文档目录。",
+      "family": "documentation"
+    },
+    {
+      "text": "只做一个普通的因果推断概念解释，不涉及临床研究或 TTE。",
+      "family": "generic-causal"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "只做一个没有因果问题的普通 ICU 描述性统计。",
+      "family": "analysis-neighbor"
+    },
+    {
+      "text": "帮我查当前目标期刊的影响因子。",
+      "family": "journal-neighbor"
+    }
+  ]
+}

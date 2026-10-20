@@ -1,0 +1,857 @@
+{
+  "ok": false,
+  "complete": false,
+  "researched_at": "2026-10-20",
+  "queries": [
+    "target trial emulation",
+    "skill router"
+  ],
+  "metric_semantics": {
+    "skills_sh_installs": "ecosystem install telemetry; not ratings or correctness",
+    "skillsmp_repo_stars": "GitHub repository stars; not installs, ratings, or skill-specific quality",
+    "cross_catalog_score": "not calculated; metrics remain separate"
+  },
+  "query_runs": [
+    {
+      "query": "target trial emulation",
+      "skills_sh": "error",
+      "skillsmp": "ok",
+      "skills_sh_error": "Command '['npx', '--yes', 'skills', 'find', 'target trial emulation']' timed out after 12.0 seconds",
+      "skillsmp_candidates": 8
+    },
+    {
+      "query": "skill router",
+      "skills_sh": "ok",
+      "skillsmp": "ok",
+      "skills_sh_candidates": 19,
+      "skillsmp_candidates": 8
+    }
+  ],
+  "candidate_family_count": 35,
+  "candidates": [
+    {
+      "family_key": "mattpocock/skills:ask-matt",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "mattpocock/skills",
+        "skill_name": "ask-matt",
+        "family_key": "mattpocock/skills:ask-matt",
+        "skills_sh_installs": 745700,
+        "skills_sh_installs_display": "745.7K",
+        "skills_sh_url": "https://skills.sh/mattpocock/skills/ask-matt"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "remotion-dev/skills:remotion-best-practices",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "remotion-dev/skills",
+        "skill_name": "remotion-best-practices",
+        "family_key": "remotion-dev/skills:remotion-best-practices",
+        "skills_sh_installs": 646200,
+        "skills_sh_installs_display": "646.2K",
+        "skills_sh_url": "https://skills.sh/remotion-dev/skills/remotion-best-practices"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "microsoft/azure-skills:azure-compute",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "microsoft/azure-skills",
+        "skill_name": "azure-compute",
+        "family_key": "microsoft/azure-skills:azure-compute",
+        "skills_sh_installs": 515000,
+        "skills_sh_installs_display": "515K",
+        "skills_sh_url": "https://skills.sh/microsoft/azure-skills/azure-compute"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "larksuite/cli:lark-skill-maker",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "larksuite/cli",
+        "skill_name": "lark-skill-maker",
+        "family_key": "larksuite/cli:lark-skill-maker",
+        "skills_sh_installs": 459800,
+        "skills_sh_installs_display": "459.8K",
+        "skills_sh_url": "https://skills.sh/larksuite/cli/lark-skill-maker"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "anthropics/skills:skill-creator",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "anthropics/skills",
+        "skill_name": "skill-creator",
+        "family_key": "anthropics/skills:skill-creator",
+        "skills_sh_installs": 410000,
+        "skills_sh_installs_display": "410K",
+        "skills_sh_url": "https://skills.sh/anthropics/skills/skill-creator"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "expo/skills:building-native-ui",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "expo/skills",
+        "skill_name": "building-native-ui",
+        "family_key": "expo/skills:building-native-ui",
+        "skills_sh_installs": 58100,
+        "skills_sh_installs_display": "58.1K",
+        "skills_sh_url": "https://skills.sh/expo/skills/building-native-ui"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "expo/skills:expo-native-ui",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "expo/skills",
+        "skill_name": "expo-native-ui",
+        "family_key": "expo/skills:expo-native-ui",
+        "skills_sh_installs": 29700,
+        "skills_sh_installs_display": "29.7K",
+        "skills_sh_url": "https://skills.sh/expo/skills/expo-native-ui"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "garrytan/gstack:gstack",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "garrytan/gstack",
+        "skill_name": "gstack",
+        "family_key": "garrytan/gstack:gstack",
+        "skills_sh_installs": 23900,
+        "skills_sh_installs_display": "23.9K",
+        "skills_sh_url": "https://skills.sh/garrytan/gstack/gstack"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "mbfinotti/sales-skills:sales-kickoff",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "mbfinotti/sales-skills",
+        "skill_name": "sales-kickoff",
+        "family_key": "mbfinotti/sales-skills:sales-kickoff",
+        "skills_sh_installs": 19700,
+        "skills_sh_installs_display": "19.7K",
+        "skills_sh_url": "https://skills.sh/mbfinotti/sales-skills/sales-kickoff"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "expo/skills:expo-web-to-native",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "expo/skills",
+        "skill_name": "expo-web-to-native",
+        "family_key": "expo/skills:expo-web-to-native",
+        "skills_sh_installs": 18400,
+        "skills_sh_installs_display": "18.4K",
+        "skills_sh_url": "https://skills.sh/expo/skills/expo-web-to-native"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "expo/skills:eas-hosting",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "expo/skills",
+        "skill_name": "eas-hosting",
+        "family_key": "expo/skills:eas-hosting",
+        "skills_sh_installs": 17900,
+        "skills_sh_installs_display": "17.9K",
+        "skills_sh_url": "https://skills.sh/expo/skills/eas-hosting"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "yuan1z0825/nature-skills:nature-reader",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "yuan1z0825/nature-skills",
+        "skill_name": "nature-reader",
+        "family_key": "yuan1z0825/nature-skills:nature-reader",
+        "skills_sh_installs": 14400,
+        "skills_sh_installs_display": "14.4K",
+        "skills_sh_url": "https://skills.sh/yuan1z0825/nature-skills/nature-reader"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "expo/skills:expo-overview",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "expo/skills",
+        "skill_name": "expo-overview",
+        "family_key": "expo/skills:expo-overview",
+        "skills_sh_installs": 13700,
+        "skills_sh_installs_display": "13.7K",
+        "skills_sh_url": "https://skills.sh/expo/skills/expo-overview"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "mbfinotti/partnerships-skills:partnerships-kickoff",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "mbfinotti/partnerships-skills",
+        "skill_name": "partnerships-kickoff",
+        "family_key": "mbfinotti/partnerships-skills:partnerships-kickoff",
+        "skills_sh_installs": 9900,
+        "skills_sh_installs_display": "9.9K",
+        "skills_sh_url": "https://skills.sh/mbfinotti/partnerships-skills/partnerships-kickoff"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "getcargohq/cargo-skills:cargo",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "getcargohq/cargo-skills",
+        "skill_name": "cargo",
+        "family_key": "getcargohq/cargo-skills:cargo",
+        "skills_sh_installs": 9200,
+        "skills_sh_installs_display": "9.2K",
+        "skills_sh_url": "https://skills.sh/getcargohq/cargo-skills/cargo"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "getcargohq/cargo-skills:cargo-quickstart",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "getcargohq/cargo-skills",
+        "skill_name": "cargo-quickstart",
+        "family_key": "getcargohq/cargo-skills:cargo-quickstart",
+        "skills_sh_installs": 8200,
+        "skills_sh_installs_display": "8.2K",
+        "skills_sh_url": "https://skills.sh/getcargohq/cargo-skills/cargo-quickstart"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "gamedev-skills/awesome-gamedev-agent-skills:router",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "gamedev-skills/awesome-gamedev-agent-skills",
+        "skill_name": "router",
+        "family_key": "gamedev-skills/awesome-gamedev-agent-skills:router",
+        "skills_sh_installs": 5100,
+        "skills_sh_installs_display": "5.1K",
+        "skills_sh_url": "https://skills.sh/gamedev-skills/awesome-gamedev-agent-skills/router"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "prisma/prisma-next:prisma-next",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "prisma/prisma-next",
+        "skill_name": "prisma-next",
+        "family_key": "prisma/prisma-next:prisma-next",
+        "skills_sh_installs": 2100,
+        "skills_sh_installs_display": "2.1K",
+        "skills_sh_url": "https://skills.sh/prisma/prisma-next/prisma-next"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "zhaoxuya520/reverse-skill:reverse-skill-router",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": {
+        "source": "skills.sh",
+        "query": "skill router",
+        "owner_repo": "zhaoxuya520/reverse-skill",
+        "skill_name": "reverse-skill-router",
+        "family_key": "zhaoxuya520/reverse-skill:reverse-skill-router",
+        "skills_sh_installs": 1300,
+        "skills_sh_installs_display": "1.3K",
+        "skills_sh_url": "https://skills.sh/zhaoxuya520/reverse-skill/reverse-skill-router"
+      },
+      "skillsmp": null,
+      "catalogs": [
+        "skills.sh"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "openclaw/openclaw:acp-router",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "acp-router",
+        "author": "openclaw",
+        "description": "Route plain-language requests for Claude Code, Cursor, Copilot, OpenClaw ACP, OpenCode, Gemini CLI, Qwen, Kiro, Kimi, iFlow, Factory Droid, Kilocode, or explicit ACP harness work into either OpenClaw ACP runtime sessions or direct acpx-driven sessions (\"telephone game\" flow). For coding-agent thread requests, read this skill first, then use only `sessions_spawn` for thread creation. Codex chat binding defaults to the native Codex app-server plugin unless ACP is explicit or background spawn needs ACP.",
+        "content_language": "en",
+        "github_url": "https://github.com/openclaw/openclaw/tree/main/extensions/acpx/skills/acp-router",
+        "skillsmp_url": "https://skillsmp.com/creators/openclaw/openclaw/extensions-acpx-skills-acp-router",
+        "repo_stars": 392094,
+        "catalog_updated_at": "2026-08-29T09:07:05+00:00",
+        "source_key": "openclaw/openclaw:extensions/acpx/skills/acp-router",
+        "family_key": "openclaw/openclaw:acp-router",
+        "aliases": [],
+        "query": "skill router"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "openclaw/openclaw:clawhub",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "clawhub",
+        "author": "openclaw",
+        "description": "Search ClawHub for skills when a requested capability is not already available; install, verify, update, uninstall, publish, or sync skills.",
+        "content_language": "en",
+        "github_url": "https://github.com/openclaw/openclaw/tree/main/skills/clawhub",
+        "skillsmp_url": "https://skillsmp.com/creators/openclaw/openclaw/skills-clawhub",
+        "repo_stars": 392094,
+        "catalog_updated_at": "2026-08-03T21:39:02+00:00",
+        "source_key": "openclaw/openclaw:skills/clawhub",
+        "family_key": "openclaw/openclaw:clawhub",
+        "aliases": [],
+        "query": "skill router"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "openclaw/openclaw:gemini",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "gemini",
+        "author": "openclaw",
+        "description": "Gemini CLI one-shot prompts, summaries, generation, skills, hooks, MCP, or Gemma routing.",
+        "content_language": "en",
+        "github_url": "https://github.com/openclaw/openclaw/tree/main/skills/gemini",
+        "skillsmp_url": "https://skillsmp.com/creators/openclaw/openclaw/skills-gemini",
+        "repo_stars": 392094,
+        "catalog_updated_at": "2026-05-17T10:50:27+00:00",
+        "source_key": "openclaw/openclaw:skills/gemini",
+        "family_key": "openclaw/openclaw:gemini",
+        "aliases": [],
+        "query": "skill router"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "openclaw/openclaw:openclaw-update",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "openclaw-update",
+        "author": "openclaw",
+        "description": "Route routine updates of an existing local or remote OpenClaw Gateway to its installation owner, with automatic session recovery. Defer to deployment-specific skills when available.",
+        "content_language": "en",
+        "github_url": "https://github.com/openclaw/openclaw/tree/main/.agents/skills/openclaw-update",
+        "skillsmp_url": "https://skillsmp.com/creators/openclaw/openclaw/agents-skills-openclaw-update",
+        "repo_stars": 392094,
+        "catalog_updated_at": "2026-08-31T00:19:24+00:00",
+        "source_key": "openclaw/openclaw:.agents/skills/openclaw-update",
+        "family_key": "openclaw/openclaw:openclaw-update",
+        "aliases": [],
+        "query": "skill router"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "openclaw/openclaw:skill-creator",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "skill-creator",
+        "author": "openclaw",
+        "description": "Author or review AgentSkills: create, repair, validate, or restructure SKILL.md files and bundled resources.",
+        "content_language": "en",
+        "github_url": "https://github.com/openclaw/openclaw/tree/main/skills/skill-creator",
+        "skillsmp_url": "https://skillsmp.com/creators/openclaw/openclaw/skills-skill-creator",
+        "repo_stars": 392094,
+        "catalog_updated_at": "2026-08-11T08:36:00+00:00",
+        "source_key": "openclaw/openclaw:skills/skill-creator",
+        "family_key": "openclaw/openclaw:skill-creator",
+        "aliases": [],
+        "query": "skill router"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "obra/superpowers:diagnosing-superpowers",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "diagnosing-superpowers",
+        "author": "obra",
+        "description": "Use when a superpowers session went wrong and your human partner wants to know why — repeated work, ignored plans, stumbles, poor results, a skill that didn't fire, \"it took too long\", \"why is it so expensive\", \"what is it doing\" — or wants to build a bug report for the superpowers maintainers, for the current session or a past one identified by id or path, on any harness.",
+        "content_language": "en",
+        "github_url": "https://github.com/obra/superpowers/tree/main/skills/diagnosing-superpowers",
+        "skillsmp_url": "https://skillsmp.com/creators/obra/superpowers/skills-diagnosing-superpowers",
+        "repo_stars": 299951,
+        "catalog_updated_at": "2026-09-19T00:31:35+00:00",
+        "source_key": "obra/superpowers:skills/diagnosing-superpowers",
+        "family_key": "obra/superpowers:diagnosing-superpowers",
+        "aliases": [],
+        "query": "skill router"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "obra/superpowers:using-superpowers",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "using-superpowers",
+        "author": "obra",
+        "description": "Use when starting any conversation - establishes how to find and use skills, requiring skill invocation before ANY response including clarifying questions",
+        "content_language": "en",
+        "github_url": "https://github.com/obra/superpowers/tree/main/skills/using-superpowers",
+        "skillsmp_url": "https://skillsmp.com/creators/obra/superpowers/skills-using-superpowers",
+        "repo_stars": 299951,
+        "catalog_updated_at": "2026-09-19T00:31:35+00:00",
+        "source_key": "obra/superpowers:skills/using-superpowers",
+        "family_key": "obra/superpowers:using-superpowers",
+        "aliases": [],
+        "query": "skill router"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "obra/superpowers:writing-skills",
+      "queries": [
+        "skill router"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "writing-skills",
+        "author": "obra",
+        "description": "Use when creating new skills, editing existing skills, or verifying skills work before deployment",
+        "content_language": "en",
+        "github_url": "https://github.com/obra/superpowers/tree/main/skills/writing-skills",
+        "skillsmp_url": "https://skillsmp.com/creators/obra/superpowers/skills-writing-skills",
+        "repo_stars": 299951,
+        "catalog_updated_at": "2026-09-19T00:31:35+00:00",
+        "source_key": "obra/superpowers:skills/writing-skills",
+        "family_key": "obra/superpowers:writing-skills",
+        "aliases": [],
+        "query": "skill router"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "affaan-m/ecc:accessibility",
+      "queries": [
+        "target trial emulation"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "accessibility",
+        "author": "affaan-m",
+        "description": "Design, implement, and audit accessible UI to WCAG 2.2 Level AA across Web, iOS, and Android — semantic ARIA roles and labels, accessibility traits and hints, focus management, contrast, target size, and screen-reader support. Use when building or auditing UI for accessibility compliance, keyboard navigation, or screen-reader support.",
+        "content_language": "en",
+        "github_url": "https://github.com/affaan-m/ECC/tree/main/pi/core/skills/accessibility",
+        "skillsmp_url": "https://skillsmp.com/creators/affaan-m/ecc/pi-core-skills-accessibility",
+        "repo_stars": 279616,
+        "catalog_updated_at": "2026-09-30T01:24:05+00:00",
+        "source_key": "affaan-m/ecc:pi/core/skills/accessibility",
+        "family_key": "affaan-m/ecc:accessibility",
+        "aliases": [],
+        "query": "target trial emulation"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "affaan-m/ecc:api-connector-builder",
+      "queries": [
+        "target trial emulation"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "api-connector-builder",
+        "author": "affaan-m",
+        "description": "Build a new API connector or provider by matching the target repo's existing integration pattern exactly. Use when adding one more integration without inventing a second architecture.",
+        "content_language": "en",
+        "github_url": "https://github.com/affaan-m/ECC/tree/main/pi/core/skills/api-connector-builder",
+        "skillsmp_url": "https://skillsmp.com/creators/affaan-m/ecc/pi-core-skills-api-connector-builder",
+        "repo_stars": 279616,
+        "catalog_updated_at": "2026-09-30T01:24:05+00:00",
+        "source_key": "affaan-m/ecc:pi/core/skills/api-connector-builder",
+        "family_key": "affaan-m/ecc:api-connector-builder",
+        "aliases": [],
+        "query": "target trial emulation"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "affaan-m/ecc:benchmark",
+      "queries": [
+        "target trial emulation"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "benchmark",
+        "author": "affaan-m",
+        "description": "Measure performance baselines and detect regressions across browser Core Web Vitals (LCP, INP, CLS, page weight), API endpoint latency percentiles, and build/test feedback times, with before/after comparison stored in git-tracked .ecc/benchmarks JSON. Use when checking page speed, responding to 'it feels slow' reports, verifying launch performance targets, or comparing stack alternatives.",
+        "content_language": "en",
+        "github_url": "https://github.com/affaan-m/ECC/tree/main/pi/core/skills/benchmark",
+        "skillsmp_url": "https://skillsmp.com/creators/affaan-m/ecc/pi-core-skills-benchmark",
+        "repo_stars": 279616,
+        "catalog_updated_at": "2026-09-30T01:24:05+00:00",
+        "source_key": "affaan-m/ecc:pi/core/skills/benchmark",
+        "family_key": "affaan-m/ecc:benchmark",
+        "aliases": [],
+        "query": "target trial emulation"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "affaan-m/ecc:django-verification",
+      "queries": [
+        "target trial emulation"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "django-verification",
+        "author": "affaan-m",
+        "description": "Run the full Django verification loop — environment check, mypy/ruff/black linting, migration safety, pytest with coverage targets, pip-audit and bandit security scans, settings and logging review, and diff review — producing a phased pass/fail report before release or PR. Use when preparing a Django pull request, validating migrations or coverage, or running pre-deploy readiness checks.",
+        "content_language": "en",
+        "github_url": "https://github.com/affaan-m/ECC/tree/main/pi/core/skills/django-verification",
+        "skillsmp_url": "https://skillsmp.com/creators/affaan-m/ecc/pi-core-skills-django-verification",
+        "repo_stars": 279616,
+        "catalog_updated_at": "2026-09-30T01:24:05+00:00",
+        "source_key": "affaan-m/ecc:pi/core/skills/django-verification",
+        "family_key": "affaan-m/ecc:django-verification",
+        "aliases": [],
+        "query": "target trial emulation"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "affaan-m/ecc:laravel-tdd",
+      "queries": [
+        "target trial emulation"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "laravel-tdd",
+        "author": "affaan-m",
+        "description": "Test-driven development for Laravel with PHPUnit and Pest, factories, database testing, fakes, and coverage targets.",
+        "content_language": "tur",
+        "github_url": "https://github.com/affaan-m/ECC/tree/main/docs/tr/skills/laravel-tdd",
+        "skillsmp_url": "https://skillsmp.com/creators/affaan-m/ecc/docs-tr-skills-laravel-tdd",
+        "repo_stars": 279616,
+        "catalog_updated_at": "2026-03-22T22:37:04+00:00",
+        "source_key": "affaan-m/ecc:docs/tr/skills/laravel-tdd",
+        "family_key": "affaan-m/ecc:laravel-tdd",
+        "aliases": [],
+        "query": "target trial emulation"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "morluto/rea:reverse-engineer-anything",
+      "queries": [
+        "target trial emulation"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "reverse-engineer-anything",
+        "author": "morluto",
+        "description": "Reverse engineer native, managed, Electron/JavaScript, packaged, firmware, and browser targets with REA. Use shipped-artifact or requested runtime evidence to explain features, compare versions, decompile code, or guide a reconstruction. Skip REA for ordinary source-repository architecture analysis.",
+        "content_language": "en",
+        "github_url": "https://github.com/morluto/rea/tree/main/.agents/skills/reverse-engineer-anything",
+        "skillsmp_url": "https://skillsmp.com/creators/morluto/rea/agents-skills-reverse-engineer-anything",
+        "repo_stars": 273922,
+        "catalog_updated_at": "2026-10-15T13:05:00+00:00",
+        "source_key": "morluto/rea:.agents/skills/reverse-engineer-anything",
+        "family_key": "morluto/rea:reverse-engineer-anything",
+        "aliases": [],
+        "query": "target trial emulation"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "nousresearch/hermes-agent:product-price-monitor",
+      "queries": [
+        "target trial emulation"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "product-price-monitor",
+        "author": "NousResearch",
+        "description": "Watch product, flight, or listing prices; alert on target.",
+        "content_language": "en",
+        "github_url": "https://github.com/NousResearch/hermes-agent/tree/main/skills/productivity/product-price-monitor",
+        "skillsmp_url": "https://skillsmp.com/creators/nousresearch/hermes-agent/skills-productivity-product-price-monitor",
+        "repo_stars": 254141,
+        "catalog_updated_at": "2026-08-08T18:19:31+00:00",
+        "source_key": "nousresearch/hermes-agent:skills/productivity/product-price-monitor",
+        "family_key": "nousresearch/hermes-agent:product-price-monitor",
+        "aliases": [],
+        "query": "target trial emulation"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    },
+    {
+      "family_key": "n8n-io/n8n:intent-recognition",
+      "queries": [
+        "target trial emulation"
+      ],
+      "skills_sh": null,
+      "skillsmp": {
+        "source": "skillsmp",
+        "name": "intent-recognition",
+        "author": "n8n-io",
+        "description": "Classifies automation requests using two decisions: anchor (which primitive owns the top-level control flow — workflow-anchored, agent-anchored, needs-clarification, or out-of-scope) and embeds_other (whether the other primitive appears embedded inside — an agent step inside a workflow, or a workflow invoked as an agent tool). Must be used whenever the current turn requires choosing or reconsidering the intent of an automation request, including compound requests, independent automations introduced mid-build, one-off questions or reports that need external systems you cannot query directly, and requests that need clarification before an anchor can be chosen. An explicit Agent request routes to agent-builder before ask-user. Do not load for routine edits or extensions when the conversation already targets a workflow or Agent.",
+        "content_language": "en",
+        "github_url": "https://github.com/n8n-io/n8n/tree/master/packages/%40n8n/instance-ai/skills/intent-recognition",
+        "skillsmp_url": "https://skillsmp.com/creators/n8n-io/n8n/packages-n8n-instance-ai-skills-intent-recognition",
+        "repo_stars": 207388,
+        "catalog_updated_at": "2026-09-28T03:39:12+00:00",
+        "source_key": "n8n-io/n8n:packages/%40n8n/instance-ai/skills/intent-recognition",
+        "family_key": "n8n-io/n8n:intent-recognition",
+        "aliases": [],
+        "query": "target trial emulation"
+      },
+      "catalogs": [
+        "skillsmp"
+      ],
+      "requires_source_review": true
+    }
+  ],
+  "missing_evidence": [
+    "skills.sh `target trial emulation`: Command '['npx', '--yes', 'skills', 'find', 'target trial emulation']' timed out after 12.0 seconds"
+  ],
+  "next_steps": [
+    "shortlist by job relevance and role coverage, not combined popularity",
+    "open canonical GitHub source and inspect SKILL.md before adoption",
+    "verify license, maintenance, permissions, security, duplication, and rating evidence",
+    "write keep/adapt/reject/invent synthesis before authoring"
+  ]
+}

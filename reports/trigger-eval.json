@@ -1,0 +1,198 @@
+{
+  "ok": true,
+  "threshold": 0.34,
+  "description_concepts": [
+    "authoring_action",
+    "skill",
+    "source_material"
+  ],
+  "missing_description_concepts": [],
+  "summary": {
+    "total": 14,
+    "passed": 14,
+    "false_positive": 0,
+    "false_negative": 0,
+    "pass_rate": 1.0
+  },
+  "failures": [],
+  "results": {
+    "should_trigger": [
+      {
+        "prompt": "使用 TTE 路由 Skill，先把心衰问题写成目标试验协议。",
+        "family": "protocol",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.667,
+        "matched_concepts": [
+          "authoring_action",
+          "skill"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "审核这个研究的 time zero、持续利尿策略和竞争事件。",
+        "family": "design",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.667,
+        "matched_concepts": [
+          "authoring_action",
+          "source_material"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "协议已经冻结，请选择 tte-estimate、check-emulation 和 tte-report。",
+        "family": "analysis",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 1.0,
+        "matched_concepts": [
+          "authoring_action",
+          "skill",
+          "source_material"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "MIMIC 和 eICU 的目标试验模拟应该怎样路由到 TTE_CC？",
+        "family": "database",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.667,
+        "matched_concepts": [
+          "authoring_action",
+          "skill"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "用目标试验方法评估心衰利尿治疗的混杂和共同支持。",
+        "family": "causal",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.667,
+        "matched_concepts": [
+          "authoring_action",
+          "skill"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "使用 TTE 路由，先查阅心衰肾功能恶化后的利尿策略文献，找研究空白并生成候选 estimand。",
+        "family": "question-discovery",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 1.0,
+        "matched_concepts": [
+          "authoring_action",
+          "skill",
+          "source_material"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "使用 TTE 路由，同一个人在多个入组时点可能属于不同策略，请判断 sequential trial 和 cloning 如何路由。",
+        "family": "sequential-cloning",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.667,
+        "matched_concepts": [
+          "authoring_action",
+          "skill"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "使用 TTE，协议已冻结，请选择竞争风险和 per-protocol effect 的统计方法。",
+        "family": "method-selection",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 1.0,
+        "matched_concepts": [
+          "authoring_action",
+          "skill",
+          "source_material"
+        ],
+        "negative_pattern": null
+      }
+    ],
+    "should_not_trigger": [
+      {
+        "prompt": "帮我创建一个交通仿真 Skill。",
+        "family": "domain-boundary",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.333,
+        "matched_concepts": [
+          "skill"
+        ],
+        "negative_pattern": "创建一个交通仿真"
+      },
+      {
+        "prompt": "翻译这段英文摘要。",
+        "family": "translation",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.0,
+        "matched_concepts": [],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "普通地整理一个 Markdown 文档目录。",
+        "family": "documentation",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.0,
+        "matched_concepts": [],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "只做一个普通的因果推断概念解释，不涉及临床研究或 TTE。",
+        "family": "generic-causal",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.667,
+        "matched_concepts": [
+          "skill",
+          "source_material"
+        ],
+        "negative_pattern": "不涉及临床研究或 TTE"
+      }
+    ],
+    "near_neighbor": [
+      {
+        "prompt": "只做一个没有因果问题的普通 ICU 描述性统计。",
+        "family": "analysis-neighbor",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.0,
+        "matched_concepts": [],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "帮我查当前目标期刊的影响因子。",
+        "family": "journal-neighbor",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.0,
+        "matched_concepts": [],
+        "negative_pattern": null
+      }
+    ]
+  }
+}

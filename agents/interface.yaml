@@ -1,0 +1,55 @@
+interface:
+  display_name: "Daxuan TTE Router"
+  short_description: "Turn a clinical research question into an evidence-aware TTE design and specialist route"
+  default_prompt: "Use $daxuan-tte-router to classify my request as question discovery, protocol design, emulation, analysis, checking, or reporting. If the question is not formed, route the required literature/problem-selection/statistical support skills and produce evidence tasks and an estimand card. Then select only the TTE_CC specialists required by time zero, treatment strategy, confounding, competing events, estimation, checking, and reporting. State what was actually read or run and what remains a data gap."
+  examples:
+    - "使用 TTE 路由 Skill，先定义这个心衰研究的目标试验"
+    - "先查文献和研究空白，再判断这个心衰问题是否适合 TTE"
+    - "审核这个 TTE 的 time zero 和治疗策略"
+    - "我的方案涉及持续给药和动态剂量，请选择合适的 TTE skill"
+    - "协议冻结后生成 TTE 估计方案并检查共同支持"
+    - "用 TTE skill 规范写目标试验模拟论文"
+    - "协议已冻结但还不确定应该用什么统计方法"
+compatibility:
+  canonical_format: "agent-skills"
+  adapter_targets:
+    - "openai"
+    - "claude"
+    - "generic"
+    - "agent-skills-compatible"
+  activation:
+    mode: "manual-or-description"
+    paths:
+      - "/home/daxuan/.codex/skills/daxuan-tte-router"
+  execution:
+    context: "inline"
+    shell: "bash"
+  trust:
+    source_tier: "local"
+    remote_inline_execution: "forbid"
+    generated_public_claims: "evidence-bound"
+  permissions:
+    network: "only when the user requests literature or source verification"
+    file_write: "the project skill package and explicitly requested protocol/report files"
+    subprocess: "local validation and explicitly requested analysis commands"
+    interactive: "ask only for a decision that changes the estimand or irreversible action"
+  degradation:
+    openai: "route-by-description"
+    claude: "route-by-description"
+    generic: "use the explicit routing table"
+gates:
+  scaffold:
+    - "valid frontmatter"
+    - "README hook and natural trigger examples"
+    - "clear exclusions"
+  production:
+    - "eight TTE_CC routes are explicit"
+    - "project-specific heart-failure adapter is explicit"
+    - "agents/interface.yaml"
+    - "evals/trigger_cases.json"
+    - "root-only discoverable SKILL.md"
+    - "validation and Skill IR reports"
+  library:
+    - "prior-art research and creation handoff"
+    - "portability and trust boundary"
+    - "review and update path"

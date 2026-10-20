@@ -1,0 +1,166 @@
+{
+  "schema_version": "2.0.0-qiaomu-lite",
+  "generated_at": "2026-10-20",
+  "package": {
+    "name": "daxuan-tte-router",
+    "version": "0.3.0",
+    "owner": "20260907_Clinical_Database",
+    "maturity_tier": "library",
+    "lifecycle_stage": "evidence-aware-routing",
+    "upstream_inspiration": "TTE_CC by Jacob Jameson",
+    "upstream_sync": {
+      "source": "https://github.com/jacobjameson/TTE_CC",
+      "relationship": "routes installed specialist skills; does not copy their implementation"
+    }
+  },
+  "intent": {
+    "description": "Route target trial emulation (TTE) work through the installed TTE_CC toolkit. Use when a user wants to\nformulate, sharpen, audit/审核, analyze, check, or report an observational target trial, or select a\ncardiovascular research question from literature before TTE design, especially for\ncardiovascular, heart failure, ICU, MIMIC/eICU, INSPIRE, or MOVER studies. Select the smallest useful\nset of the eight TTE_CC skills, preserve the target-trial protocol before estimation, and use the\nproject's clinical and data-semantic rules, including confounding/混杂 and positivity/共同支持. This skill routes work; it does not replace the specialist\nskills or turn teaching examples into executed clinical analyses.\n",
+    "job_to_be_done": "Turn a clinical research question into an evidence-aware estimand, data-support gate, and minimal target-trial-emulation specialist route.",
+    "target_users": [
+      "clinical researchers in this project",
+      "TTE analysts"
+    ],
+    "inputs": [
+      "clinical research question or topic",
+      "literature corpus or search request",
+      "target-trial protocol or draft",
+      "available database and data semantics",
+      "current analysis stage"
+    ],
+    "outputs": [
+      "intent classification",
+      "selected TTE specialists",
+      "supporting research skills",
+      "evidence tasks and sources",
+      "estimand/design card",
+      "stage handoff",
+      "protocol/data artifact",
+      "data gaps and validity threats",
+      "run status"
+    ],
+    "exclusions": [
+      "unverified novelty claims",
+      "new estimator invention",
+      "unrequested cohort mutation",
+      "clinical threshold selection from outcomes",
+      "journal acceptance claims",
+      "publication"
+    ],
+    "qiaomu_defaults": {}
+  },
+  "triggers": {
+    "should_trigger": [
+      "使用 TTE 路由 Skill，先把心衰问题写成目标试验协议。",
+      "审核这个研究的 time zero、持续利尿策略和竞争事件。",
+      "协议已经冻结，请选择 tte-estimate、check-emulation 和 tte-report。",
+      "MIMIC 和 eICU 的目标试验模拟应该怎样路由到 TTE_CC？",
+      "用目标试验方法评估心衰利尿治疗的混杂和共同支持。",
+      "使用 TTE 路由，先查阅心衰肾功能恶化后的利尿策略文献，找研究空白并生成候选 estimand。",
+      "使用 TTE 路由，同一个人在多个入组时点可能属于不同策略，请判断 sequential trial 和 cloning 如何路由。",
+      "使用 TTE，协议已冻结，请选择竞争风险和 per-protocol effect 的统计方法。"
+    ],
+    "should_not_trigger": [
+      "帮我创建一个交通仿真 Skill。",
+      "翻译这段英文摘要。",
+      "普通地整理一个 Markdown 文档目录。",
+      "只做一个普通的因果推断概念解释，不涉及临床研究或 TTE。"
+    ],
+    "near_neighbor": [
+      "只做一个没有因果问题的普通 ICU 描述性统计。",
+      "帮我查当前目标期刊的影响因子。"
+    ]
+  },
+  "workflow": {
+    "router_rules": [],
+    "compact_workflow": [],
+    "gate_ladder": [],
+    "output_contract": []
+  },
+  "resources": {
+    "references": [
+      "references/design-rationale.md",
+      "references/estimand-card.md",
+      "references/heart-failure-data-support.md",
+      "references/maintenance.md",
+      "references/project-adapters.md",
+      "references/route-card.md",
+      "references/routing-map.md",
+      "references/supporting-skills.md"
+    ],
+    "scripts": [
+      "scripts/route_tte.py"
+    ],
+    "evals": [
+      "evals/trigger_cases.json"
+    ],
+    "reports": [
+      "reports/creation-handoff.md",
+      "reports/luban-polish-report-20261020.md",
+      "reports/prior-art-candidates.json",
+      "reports/prior-art-research.md",
+      "reports/skill-ir.json",
+      "reports/trigger-eval.json"
+    ]
+  },
+  "portability": {
+    "canonical_format": "agent-skills",
+    "adapter_targets": [
+      "openai",
+      "claude",
+      "generic",
+      "agent-skills-compatible"
+    ],
+    "activation": {
+      "mode": "manual-or-description",
+      "paths": [
+        "/home/daxuan/.codex/skills/daxuan-tte-router"
+      ]
+    },
+    "execution": {
+      "context": "inline",
+      "shell": "bash"
+    },
+    "trust": {
+      "source_tier": "local",
+      "remote_inline_execution": "forbid",
+      "generated_public_claims": "evidence-bound"
+    },
+    "permissions": {
+      "network": "only when the user requests literature or source verification",
+      "file_write": "the project skill package and explicitly requested protocol/report files",
+      "subprocess": "local validation and explicitly requested analysis commands",
+      "interactive": "ask only for a decision that changes the estimand or irreversible action"
+    },
+    "degradation": {
+      "openai": "route-by-description",
+      "claude": "route-by-description",
+      "generic": "use the explicit routing table"
+    }
+  },
+  "gates": {
+    "scaffold": [
+      "valid frontmatter",
+      "README hook and natural trigger examples",
+      "clear exclusions"
+    ],
+    "production": [
+      "eight TTE_CC routes are explicit",
+      "project-specific heart-failure adapter is explicit",
+      "agents/interface.yaml",
+      "evals/trigger_cases.json",
+      "root-only discoverable SKILL.md",
+      "validation and Skill IR reports"
+    ],
+    "library": [
+      "prior-art research and creation handoff",
+      "portability and trust boundary",
+      "review and update path"
+    ]
+  },
+  "evidence_boundary": {
+    "generated_reports_are_evidence": true,
+    "planned_work_is_evidence": false,
+    "missing_external_or_human_evidence_label": "missing evidence",
+    "public_claim_policy": "claim only what local validation, install proof, human review, or provider-backed evidence actually supports"
+  }
+}
