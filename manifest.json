@@ -1,11 +1,11 @@
 {
   "name": "daxuan-tte-router",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "owner": "20260907_Clinical_Database",
-  "updated_at": "2026-10-20",
-  "status": "local-development",
+  "updated_at": "2026-10-24",
+  "status": "public-development",
   "maturity_tier": "library",
-  "lifecycle_stage": "evidence-aware-routing",
+  "lifecycle_stage": "evidence-gated-research-pipeline",
   "context_budget_tier": "production",
   "upstream_inspiration": "TTE_CC by Jacob Jameson",
   "upstream_sync": {
@@ -34,7 +34,10 @@
       "stage handoff",
       "protocol/data artifact",
       "data gaps and validity threats",
-      "run status"
+      "run status",
+      "resumable research state",
+      "phase handoff artifacts",
+      "pilot decision and result feedback"
     ],
     "exclusions": [
       "unverified novelty claims",
@@ -53,10 +56,11 @@
   },
   "release_gates": {
     "local": [
-      "validate_skill",
+      "portable-path check",
+      "skill resolution check",
       "route unit tests",
-      "trigger_eval",
-      "export_skill_ir"
+      "pipeline behavior tests",
+      "trigger_eval when qiaomu-meta-skill is installed"
     ],
     "publish": [
       "explicit user request",

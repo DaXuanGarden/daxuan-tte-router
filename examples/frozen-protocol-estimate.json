@@ -37,5 +37,17 @@
   "stop_condition": "Resolve the listed prerequisites and confirm the selected artifact before advancing.",
   "run_status": "suggested",
   "confidence": "medium",
-  "unmatched": "协议已冻结，完成数据映射并估计 per-protocol effect。"
+  "unmatched": "协议已冻结，完成数据映射并估计 per-protocol effect。",
+  "pipeline": {
+    "state_artifact": "research-state.json",
+    "handoff_artifacts": [
+      "route-card.json",
+      "evidence-map.json",
+      "design-card.json",
+      "pilot-report.md",
+      "feedback.md"
+    ],
+    "pilot_required_before_estimate": true,
+    "execution_mode": "suggested"
+  }
 }

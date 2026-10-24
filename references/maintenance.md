@@ -1,6 +1,6 @@
 # 维护规则
 
-当 `/home/daxuan/.tte_cc` 的 specialist 入口、名称或顺序变化时，更新 `SKILL.md`、`references/route-card.md`
+当 `$TTE_CC_HOME/.claude/skills` 的 specialist 入口、名称或顺序变化时，更新 `SKILL.md`、`references/route-card.md`
 和 `scripts/route_tte.py` 的规则，并重新生成 `reports/skill-ir.json` 与 `reports/trigger-eval.json`。
 
 当研究支持 Skill 的路径、名称或文献检索边界变化时，只更新 discovery lane 的支持表和测试，不把支持

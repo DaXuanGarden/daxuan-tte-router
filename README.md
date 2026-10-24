@@ -2,7 +2,7 @@
 
 > 把“我想研究什么”变成一张有文献依据、estimand、数据缺口和 TTE Skill 交接的研究设计路线图。
 
-这是本项目 TTE_CC 工具包的总入口。它先判断请求处于选题/文献反思、协议设计、仿真、估计、检查还是报告阶段，再选择最小的 TTE specialist 和必要的研究支持 Skill。
+这是本项目 TTE_CC 工具包的总入口。它先判断请求处于选题/文献反思、协议设计、仿真、估计、检查还是报告阶段，再选择最小的 TTE specialist 和必要的研究支持 Skill。`scripts/pipeline.py` 在此基础上提供可恢复的研究运行目录、阶段交接和 pilot 门禁。
 
 ## 你什么时候需要它？
 
@@ -15,7 +15,7 @@
 - `question_discovery`：证据任务、候选科学问题、研究设计 rationale 和候选 estimand。
 - `protocol_design`：目标试验八要素、T0、治疗规则、intercurrent events 和变量级 data map 闸门。
 - `emulation/analysis/checking/reporting`：最小 TTE Skill 路径、前置条件、数据缺口和实际运行状态。
-- 路由 JSON、estimand card、心衰 data-support 表和可审计的下一步交接。
+- 路由 JSON、estimand card、心衰 data-support 表、研究状态和可审计的下一步交接。
 
 ## 已接入的八个 TTE Skill
 
@@ -28,11 +28,13 @@
 | 审查 | `check-emulation` |
 | 报告 | `tte-report` |
 
-研究问题发现时按需联动 `auto-inspire-scientific-problem-selection`、`auto-inspire-paper-topic-discovery`、
+研究问题发现时按需联动 `clinical-research-session`、`multi-database-literature-collector`、
+`auto-inspire-literature-workflow-orchestrator`、`medical-research-gap-finder`、
+`auto-inspire-scientific-problem-selection`、`auto-inspire-paper-topic-discovery`、
 `auto-inspire-academic-literature-search`、`auto-inspire-causal-inference`、
-`auto-inspire-stat-method-selector` 和 `auto-inspire-survival-epi`。这些是支持 Skill，不替代八个 TTE specialist。
+`auto-inspire-stat-method-selector` 和 `auto-inspire-survival-epi`。这些是支持 Skill，不替代八个 TTE specialist；完整注册见 [references/skill-registry.json](references/skill-registry.json)。
 
-原始工具包位于 `/home/daxuan/.tte_cc`，专业入口位于 `/home/daxuan/.codex/skills/`。本路由器不复制它们的正文。
+原始工具包通过 `TTE_CC_HOME` 定位，专业入口通过 `CODEX_SKILLS_ROOT`、`DAXUAN_SKILLS_ROOT` 或常规用户 Skill 目录定位。本路由器不复制它们的正文。
 
 上游工具包：TTE_CC by Jacob Jameson（[GitHub](https://github.com/jacobjameson/TTE_CC)）。
 
@@ -42,7 +44,7 @@
 
 ```bash
 npx skills add DaXuanGarden/daxuan-tte-router --skill daxuan-tte-router
-npx skills add /home/daxuan/20260907_Clinical_Database/skills/daxuan-tte-router --skill daxuan-tte-router
+npx skills add ./skills/daxuan-tte-router --skill daxuan-tte-router
 ```
 
 你可以直接这样说：
@@ -66,13 +68,31 @@ npx skills add /home/daxuan/20260907_Clinical_Database/skills/daxuan-tte-router 
 ## 可重复路由与研究设计卡
 
 ```bash
-python3 /home/daxuan/20260907_Clinical_Database/skills/daxuan-tte-router/scripts/route_tte.py \
+python3 scripts/route_tte.py \
   --text "我想找心衰肾功能恶化后的利尿策略研究空白和文献反思" --json
 ```
 
 脚本只根据文字给出候选意图和路由，不读取数据库，也不自动检索文献。真实检索后，把核验来源写入
 `evidence_sources` 和 [design-rationale.md](references/design-rationale.md)。使用
 [route-card.md](references/route-card.md) 记录 `intent`、estimand、intercurrent events、识别假设和 data support。
+
+### 可恢复研究运行
+
+初始化只创建状态和交接模板，不查询数据库、不抓取文献、不运行估计：
+
+```bash
+python3 scripts/pipeline.py init \
+  --text "先查心衰肾功能恶化后的利尿策略文献，再决定是否进入 TTE 协议" \
+  --workdir ./tte-runs/heart-failure-renal-signal
+python3 scripts/pipeline.py status --workdir ./tte-runs/heart-failure-renal-signal
+```
+
+运行目录包含 `research-state.json`、`route-card.json`、`evidence-map.json`、`design-card.json`、
+`pilot-report.md`、`feedback.md` 和 `handoffs/`。完成每个阶段后用 `complete-phase` 写入真实产物；
+完整估计前必须用 `record-pilot --decision proceed` 记录队列、暴露、结局、时间零点、随访和重叠性检查。
+如果 pilot 需要改设计，使用 `downgrade`；如果数据不支持，使用 `stop`。分析或 pilot 后使用
+`feedback` 记录 `data_failure`、`design_failure`、`assumption_violation`、`null_result`、
+`positive_result` 或 `pilot_failure`，并写明下一步动作。
 
 ## 心衰首个 Showcase
 
@@ -101,16 +121,20 @@ question discovery → target-trial → time-zero → sustained-strategies
 - `references/design-rationale.md`：文献反思和候选问题模板。
 - `references/heart-failure-data-support.md`：心衰变量级数据支持表。
 - `scripts/route_tte.py`：无依赖的可重复初筛器。
+- `scripts/skill_registry.py`：按能力注册表解析已安装 Skill，不写死本机路径。
+- `scripts/pipeline.py`：创建、恢复和更新研究运行状态。
 - `tests/test_route_tte.py`：路由边界测试。
 
 ## 校验
 
 ```bash
-python3 /home/daxuan/.codex/skills/qiaomu-meta-skill/scripts/validate_skill.py .
 python3 -m unittest discover -s tests -v
-python3 /home/daxuan/.codex/skills/qiaomu-meta-skill/scripts/trigger_eval.py . --cases evals/trigger_cases.json --output reports/trigger-eval.json
-python3 /home/daxuan/.codex/skills/qiaomu-meta-skill/scripts/export_skill_ir.py . --output reports/skill-ir.json
+python3 scripts/skill_registry.py --json --skill target-trial
+python3 scripts/route_tte.py --text "协议已冻结，运行 tte-estimate 并检查共同支持" --json
 ```
+
+如果本地安装了 `qiaomu-meta-skill`，可以另外运行其 `validate_skill.py`、`trigger_eval.py` 和
+`export_skill_ir.py`；这些是发布环境检查，不是本包的运行时依赖。
 
 ## 维护
 

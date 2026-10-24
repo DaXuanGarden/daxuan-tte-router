@@ -9,19 +9,18 @@ description: |
   project's clinical and data-semantic rules, including confounding/混杂 and positivity/共同支持. This skill routes work; it does not replace the specialist
   skills or turn teaching examples into executed clinical analyses.
 metadata:
-  version: "0.3.0"
+  version: "0.4.0"
   owner: "20260907_Clinical_Database"
   upstream: "TTE_CC by Jacob Jameson"
 ---
 
 # Daxuan TTE Router
 
-Use this package as the single entry point for the local TTE workflow. It routes a request to the existing
+Use this package as the TTE workflow entry point. It routes a request to the existing
 TTE_CC specialist skills and keeps the clinical question, estimand, data mapping, and analysis stage aligned.
-The router is a policy layer: it decides what should be read next, while the selected specialist skill
-defines how that stage is carried out.
+The router is a policy layer: it decides what to read next; the selected specialist defines the stage.
 
-The workflow has two connected lanes:
+Workflow:
 
 ```text
 question discovery → evidence reflection → estimand/data-support gate → TTE protocol → emulation
@@ -29,7 +28,7 @@ question discovery → evidence reflection → estimand/data-support gate → TT
 ```
 
 The discovery lane improves the scientific question; the TTE lane freezes and emulates the causal protocol.
-Do not let a literature search, model name, or teaching example silently become a clinical conclusion.
+Do not turn a literature search, model name, or teaching example into a clinical conclusion.
 
 ## First classify the intent
 
@@ -80,19 +79,35 @@ Select only the stages needed for the request. If the user asks for a design or 
 estimation merely because an estimator is available. If the user asks for an estimate without a frozen
 protocol, route the missing design stages first and state the gate.
 
-Read the selected specialist `SKILL.md` from `/home/daxuan/.codex/skills/<name>/SKILL.md`. The shared
-TTE_CC toolkit and references are at `/home/daxuan/.tte_cc`; use `$TTE_CC_HOME` when the project sets it.
-If a specialist or toolkit is unavailable, state the missing evidence and continue only with the stage that
-can be completed faithfully.
+Read the selected specialist through `scripts/skill_registry.py`. It resolves
+`<skills-root>/<name>/SKILL.md` from `CODEX_SKILLS_ROOT`, `DAXUAN_SKILLS_ROOT`, `TTE_CC_HOME`, and the
+conventional user skill directory. The TTE_CC specialist root is `$TTE_CC_HOME/.claude/skills` when
+`TTE_CC_HOME` is set. If a specialist or toolkit is unavailable, record it as missing and continue only
+with the stage that can be completed faithfully.
 
 ## Deterministic route card
 
 When the request is ambiguous, or when a reproducible routing record is useful, run:
 
 ```bash
-python3 /home/daxuan/20260907_Clinical_Database/skills/daxuan-tte-router/scripts/route_tte.py \
+python3 scripts/route_tte.py \
   --text "<the user's TTE request>" --json
 ```
+
+For a resumable research run, initialize a project-local work directory instead:
+
+```bash
+python3 scripts/pipeline.py init \
+  --text "<the user's TTE request>" \
+  --workdir ./tte-runs/<run-name>
+python3 scripts/pipeline.py status --workdir ./tte-runs/<run-name>
+```
+
+The pipeline creates `research-state.json`, `route-card.json`, `evidence-map.json`, `design-card.json`,
+`pilot-report.md`, `feedback.md`, and a `handoffs/` directory. Initialization does not query a database,
+retrieve literature, or run an estimate. A full estimate requires a recorded pilot decision of `proceed`.
+Use `complete-phase` only after the named artifact exists, and use `feedback` after each pilot or analysis
+to record whether the next action is a data repair, protocol revision, assumption review, or result follow-up.
 
 The script is a keyword-based suggestion, not a clinical decision. Resolve its suggestions against the
 question, treatment decision, data semantics, and the specialist instructions. Return this route card in
@@ -167,7 +182,7 @@ For either question, begin with `question_discovery` when the clinical gap or co
 established. Record the direct clinical example, methods example, boundary/counterexample, estimand card and
 the variable-level checks in:
 
-`/home/daxuan/20260907_Clinical_Database/skills/daxuan-tte-router/references/heart-failure-data-support.md`
+`references/heart-failure-data-support.md`
 
 ### Initiation timing
 
@@ -176,9 +191,9 @@ within a prespecified window versus later initiation on in-hospital outcomes? Th
 `target-trial`, `time-zero`, `emulate-randomization`, and `competing-events`; add `tte-estimate` only after
 the initiation window and eligibility are observable in the data.
 
-The current local draft is:
+The project can provide a draft at a project-relative path such as:
 
-`/home/daxuan/20260907_Clinical_Database/target_trial_protocol.md`
+`target_trial_protocol.md`
 
 ### Response to worsening renal function while treating congestion
 
@@ -189,9 +204,9 @@ question routes through `target-trial`, `time-zero`, `sustained-strategies`, `em
 `competing-events`; add `tte-estimate` only after phenotype, dose/action mapping, strategy support, and
 endpoint coverage are documented.
 
-The current local draft is:
+The project can provide a draft at a project-relative path such as:
 
-`/home/daxuan/20260907_Clinical_Database/MIMIC_elCU数据库/literature/心血管TTE选题与设计_20261020/心衰肾功能恶化_TTE草案/target_trial_protocol.md`
+`MIMIC_elCU数据库/.../target_trial_protocol.md`
 
 Neither adapter freezes a dose percentage, decision grid, renal threshold, or rescue rule. Those are
 clinical and data decisions to settle before effect estimation. A +2 L net-fluid trigger alone does not

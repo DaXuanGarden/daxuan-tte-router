@@ -3,8 +3,10 @@
 
 The router is deterministic and dependency-free. It classifies the user's
 intent, suggests research-support skills when a question is still being
-formed, and selects the smallest TTE_CC specialist set. It never reads data,
-fetches literature, or makes a clinical decision.
+formed, and selects the smallest TTE_CC specialist set. The companion
+``pipeline.py`` resolves installed skills and persists the staged handoff;
+this module itself never reads data, fetches literature, or makes a clinical
+decision.
 """
 from __future__ import annotations
 
@@ -35,6 +37,10 @@ CANONICAL_ORDER = (
 )
 
 RESEARCH_SUPPORT_ORDER = (
+    "clinical-research-session",
+    "multi-database-literature-collector",
+    "auto-inspire-literature-workflow-orchestrator",
+    "medical-research-gap-finder",
     "auto-inspire-scientific-problem-selection",
     "auto-inspire-paper-topic-discovery",
     "auto-inspire-academic-literature-search",
@@ -314,6 +320,10 @@ NON_TTE_ONLY = (
 )
 
 DISCOVERY_SKILLS = (
+    "clinical-research-session",
+    "multi-database-literature-collector",
+    "auto-inspire-literature-workflow-orchestrator",
+    "medical-research-gap-finder",
     "auto-inspire-scientific-problem-selection",
     "auto-inspire-paper-topic-discovery",
     "auto-inspire-academic-literature-search",
@@ -351,6 +361,12 @@ def _empty_result(normalized: str, confidence: str = "low") -> dict[str, object]
         "run_status": "suggested",
         "confidence": confidence,
         "unmatched": normalized,
+        "pipeline": {
+            "state_artifact": "research-state.json",
+            "handoff_artifacts": [],
+            "pilot_required_before_estimate": True,
+            "execution_mode": "suggested",
+        },
     }
 
 
@@ -471,6 +487,15 @@ def route(text: str) -> dict[str, object]:
 
     ordered = [name for name in CANONICAL_ORDER if name in selected]
 
+    # A literature-led discovery request may mention a treatment duration or
+    # competing event while still asking whether the question is worth
+    # studying. Do not let those words prematurely dispatch a TTE specialist.
+    # The discovery handoff must first produce evidence and a clinical
+    # decision; a later request can then route the protocol stages.
+    if literature_request:
+        ordered = []
+        hits = {}
+
     supporting: set[str] = set()
     if intent == "question_discovery":
         supporting.update(DISCOVERY_SKILLS)
@@ -484,6 +509,8 @@ def route(text: str) -> dict[str, object]:
         supporting.add("clinical-research-pitfalls")
     if intent in ("protocol_design", "emulation", "analysis"):
         supporting.add("clinical-research-analysis-framework")
+    if _contains(normalized, ("收敛", "refine", "refinement", "候选题目", "candidate topic")):
+        supporting.add("research-refine")
     supporting_ordered = [name for name in RESEARCH_SUPPORT_ORDER if name in supporting]
 
     evidence_tasks: list[str] = []
@@ -557,6 +584,18 @@ def route(text: str) -> dict[str, object]:
         "run_status": "suggested",
         "confidence": "high" if strong_hits or workflow_hits or len(ordered) > 1 else "medium",
         "unmatched": normalized,
+        "pipeline": {
+            "state_artifact": "research-state.json",
+            "handoff_artifacts": [
+                "route-card.json",
+                "evidence-map.json",
+                "design-card.json",
+                "pilot-report.md",
+                "feedback.md",
+            ],
+            "pilot_required_before_estimate": True,
+            "execution_mode": "suggested",
+        },
     }
 
 

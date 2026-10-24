@@ -1,12 +1,12 @@
 {
   "schema_version": "2.0.0-qiaomu-lite",
-  "generated_at": "2026-10-20",
+  "generated_at": "2026-10-24",
   "package": {
     "name": "daxuan-tte-router",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "owner": "20260907_Clinical_Database",
     "maturity_tier": "library",
-    "lifecycle_stage": "evidence-aware-routing",
+    "lifecycle_stage": "evidence-gated-research-pipeline",
     "upstream_inspiration": "TTE_CC by Jacob Jameson",
     "upstream_sync": {
       "source": "https://github.com/jacobjameson/TTE_CC",
@@ -36,7 +36,10 @@
       "stage handoff",
       "protocol/data artifact",
       "data gaps and validity threats",
-      "run status"
+      "run status",
+      "resumable research state",
+      "phase handoff artifacts",
+      "pilot decision and result feedback"
     ],
     "exclusions": [
       "unverified novelty claims",
@@ -85,16 +88,20 @@
       "references/project-adapters.md",
       "references/route-card.md",
       "references/routing-map.md",
+      "references/skill-registry.json",
       "references/supporting-skills.md"
     ],
     "scripts": [
-      "scripts/route_tte.py"
+      "scripts/pipeline.py",
+      "scripts/route_tte.py",
+      "scripts/skill_registry.py"
     ],
     "evals": [
       "evals/trigger_cases.json"
     ],
     "reports": [
       "reports/creation-handoff.md",
+      "reports/luban-pipeline-upgrade-20261024.md",
       "reports/luban-polish-report-20261020.md",
       "reports/prior-art-candidates.json",
       "reports/prior-art-research.md",
@@ -113,7 +120,7 @@
     "activation": {
       "mode": "manual-or-description",
       "paths": [
-        "/home/daxuan/.codex/skills/daxuan-tte-router"
+        "<skills-root>/daxuan-tte-router"
       ]
     },
     "execution": {

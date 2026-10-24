@@ -20,7 +20,7 @@ compatibility:
   activation:
     mode: "manual-or-description"
     paths:
-      - "/home/daxuan/.codex/skills/daxuan-tte-router"
+      - "<skills-root>/daxuan-tte-router"
   execution:
     context: "inline"
     shell: "bash"

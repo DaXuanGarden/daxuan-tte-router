@@ -1,0 +1,44 @@
+{
+  "version": "1.0",
+  "resolution": {
+    "roots": [
+      "CODEX_SKILLS_ROOT",
+      "DAXUAN_SKILLS_ROOT",
+      "TTE_CC_HOME/.claude/skills",
+      "~/.codex/skills"
+    ],
+    "entry": "<root>/<skill-name>/SKILL.md",
+    "missing_skill_policy": "report_and_continue"
+  },
+  "skills": [
+    {"name": "target-trial", "lane": "tte", "phase": "tte_protocol", "required": true},
+    {"name": "time-zero", "lane": "tte", "phase": "tte_protocol", "required": true},
+    {"name": "sustained-strategies", "lane": "tte", "phase": "tte_protocol", "required": false},
+    {"name": "emulate-randomization", "lane": "tte", "phase": "tte_protocol", "required": false},
+    {"name": "competing-events", "lane": "tte", "phase": "tte_protocol", "required": false},
+    {"name": "tte-estimate", "lane": "tte", "phase": "execution", "required": false},
+    {"name": "check-emulation", "lane": "tte", "phase": "diagnostics", "required": false},
+    {"name": "tte-report", "lane": "tte", "phase": "report", "required": false},
+
+    {"name": "clinical-research-session", "lane": "research", "phase": "intake", "required": false},
+    {"name": "multi-database-literature-collector", "lane": "research", "phase": "literature", "required": false},
+    {"name": "auto-inspire-academic-literature-search", "lane": "research", "phase": "literature", "required": false},
+    {"name": "auto-inspire-literature-workflow-orchestrator", "lane": "research", "phase": "literature", "required": false},
+    {"name": "medical-research-gap-finder", "lane": "research", "phase": "gap_audit", "required": false},
+    {"name": "auto-inspire-scientific-problem-selection", "lane": "research", "phase": "question_refinement", "required": false},
+    {"name": "auto-inspire-paper-topic-discovery", "lane": "research", "phase": "question_refinement", "required": false},
+    {"name": "research-refine", "lane": "research", "phase": "question_refinement", "required": false},
+    {"name": "research-refine-pipeline", "lane": "research", "phase": "question_refinement", "required": false},
+    {"name": "auto-inspire-causal-inference", "lane": "research", "phase": "data_support", "required": false},
+    {"name": "auto-inspire-stat-method-selector", "lane": "research", "phase": "data_support", "required": false},
+    {"name": "auto-inspire-survival-epi", "lane": "research", "phase": "data_support", "required": false},
+    {"name": "clinical-research-analysis-framework", "lane": "research", "phase": "data_support", "required": false},
+    {"name": "clinical-research-pitfalls", "lane": "research", "phase": "data_support", "required": false},
+    {"name": "experiment-plan", "lane": "execution", "phase": "pilot", "required": false},
+    {"name": "experiment-bridge", "lane": "execution", "phase": "execution", "required": false},
+    {"name": "run-experiment", "lane": "execution", "phase": "execution", "required": false},
+    {"name": "experiment-audit", "lane": "review", "phase": "diagnostics", "required": false},
+    {"name": "auto-review-loop", "lane": "review", "phase": "feedback", "required": false},
+    {"name": "StatsVisual-Skill", "lane": "review", "phase": "report", "required": false}
+  ]
+}

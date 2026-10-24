@@ -6,7 +6,7 @@
 - T0：可观测的入组/决策窗口起点，而不是首次给药后的时点。
 - 主要路由：`target-trial`、`time-zero`、`emulate-randomization`、`competing-events`。
 - 关键数据核对：急性心衰表型、首次实际给药时间、入院与死亡时间、出院时间、治疗前混杂因素。
-- 草案：`/home/daxuan/20260907_Clinical_Database/target_trial_protocol.md`。
+- 草案：项目工作目录中的 `target_trial_protocol.md`。
 
 ## 心衰合并肾功能恶化后的利尿强度
 
@@ -14,7 +14,7 @@
 - T0：肾功能恶化信号首次满足且患者仍符合策略适用条件的决策时点。
 - 主要路由：`target-trial`、`time-zero`、`sustained-strategies`、`emulate-randomization`、`competing-events`。
 - 关键数据核对：容量负荷表型、肌酐基线与时间窗、实际给药剂量、补救治疗、RRT、死亡、出院和液体平衡测量覆盖。
-- 草案：`/home/daxuan/20260907_Clinical_Database/MIMIC_elCU数据库/literature/心血管TTE选题与设计_20261020/心衰肾功能恶化_TTE草案/target_trial_protocol.md`。
+- 草案：项目工作目录中的 `MIMIC_elCU数据库/.../target_trial_protocol.md`。
 
 两个问题不能共用一个 T0 或把“启动”与“肾功能恶化后的调整”合并为一个暴露。剂量比例、肾功能
 阈值、治疗窗口和补救规则必须在估计前由临床依据与数据可观测性共同确定。

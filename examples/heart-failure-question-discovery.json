@@ -3,6 +3,10 @@
   "stage": "discovery",
   "selected": [],
   "supporting_skills": [
+    "clinical-research-session",
+    "multi-database-literature-collector",
+    "auto-inspire-literature-workflow-orchestrator",
+    "medical-research-gap-finder",
     "auto-inspire-scientific-problem-selection",
     "auto-inspire-paper-topic-discovery",
     "auto-inspire-academic-literature-search"
@@ -39,5 +43,17 @@
   "stop_condition": "Resolve the listed prerequisites and confirm the selected artifact before advancing.",
   "run_status": "suggested",
   "confidence": "high",
-  "unmatched": "使用 TTE 路由，先查阅心衰肾功能恶化后的利尿策略文献，找研究空白并生成候选 estimand。"
+  "unmatched": "使用 TTE 路由，先查阅心衰肾功能恶化后的利尿策略文献，找研究空白并生成候选 estimand。",
+  "pipeline": {
+    "state_artifact": "research-state.json",
+    "handoff_artifacts": [
+      "route-card.json",
+      "evidence-map.json",
+      "design-card.json",
+      "pilot-report.md",
+      "feedback.md"
+    ],
+    "pilot_required_before_estimate": true,
+    "execution_mode": "suggested"
+  }
 }
