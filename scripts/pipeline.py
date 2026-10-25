@@ -93,6 +93,24 @@ def _next_action(route_card: dict[str, Any]) -> str:
     return "Clarify the clinical decision, population, treatment contrast, outcome, and horizon."
 
 
+def _public_resolutions(resolutions: list[dict[str, object]]) -> list[dict[str, object]]:
+    """Keep shareable state free of machine-specific resolver paths."""
+    public: list[dict[str, object]] = []
+    for resolution in resolutions:
+        item = dict(resolution)
+        item["path"] = None
+        item["searched_roots"] = []
+        item["path_scope"] = "local-runtime-only"
+        public.append(item)
+    return public
+
+
+def _ledger_status(records: list[dict[str, Any]]) -> str:
+    if records and all(record.get("status") == "verified" for record in records):
+        return "verified"
+    return "in_progress"
+
+
 def _write_templates(workdir: Path, route_card: dict[str, Any]) -> None:
     (workdir / "handoffs").mkdir(exist_ok=True)
     _write_json(workdir / "route-card.json", route_card)
@@ -165,7 +183,7 @@ def init_run(text: str, workdir: Path, skills_roots: list[str]) -> dict[str, Any
     route_card = route(text)
     names = list(route_card["selected"]) + list(route_card["supporting_skills"])
     resolutions = resolve_many(dict.fromkeys(names), skills_roots)
-    route_card["skill_resolution"] = resolutions
+    route_card["skill_resolution"] = _public_resolutions(resolutions)
     missing_required = [item["name"] for item in resolutions if item["required"] and item["status"] != "found"]
     state: dict[str, Any] = {
         "schema_version": "1.0",
@@ -176,7 +194,7 @@ def init_run(text: str, workdir: Path, skills_roots: list[str]) -> dict[str, Any
         "current_phase": "intake",
         "next_action": _next_action(route_card),
         "route": route_card,
-        "skill_resolution": resolutions,
+        "skill_resolution": route_card["skill_resolution"],
         "missing_required_skills": missing_required,
         "phases": _initial_phase_state(),
         "history": [{"at": _now(), "event": "initialized", "phase": "intake"}],
@@ -190,6 +208,8 @@ def record_pilot(workdir: Path, decision: str, notes: str) -> dict[str, Any]:
     if decision not in PILOT_DECISIONS:
         raise SystemExit(f"Pilot decision must be one of: {', '.join(sorted(PILOT_DECISIONS))}")
     state = _load_state(workdir)
+    if state["current_phase"] != "pilot":
+        raise SystemExit(f"Pilot decision requires current_phase=pilot; current phase is {state['current_phase']}")
     phase = state["phases"]["pilot"]
     phase.update({"status": decision, "completed_at": _now(), "notes": [notes] if notes else []})
     report = workdir / "pilot-report.md"
@@ -269,7 +289,7 @@ def record_evidence(
         "recorded_at": _now(),
     }
     ledger["records"].append(record)
-    ledger["status"] = "verified" if status == "verified" else "in_progress"
+    ledger["status"] = _ledger_status(ledger["records"])
     _write_json(ledger_path, ledger)
     state["history"].append({"at": record["recorded_at"], "event": "evidence_recorded", "status": status})
     state["next_action"] = "Continue the evidence review and complete the gap audit before freezing the TTE protocol."

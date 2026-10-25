@@ -3,7 +3,7 @@
   "generated_at": "2026-10-25",
   "package": {
     "name": "daxuan-tte-router",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "owner": "20260907_Clinical_Database",
     "maturity_tier": "library",
     "lifecycle_stage": "evidence-gated-research-pipeline",
@@ -105,6 +105,7 @@
       "reports/luban-evidence-ledger-20261025.md",
       "reports/luban-pipeline-upgrade-20261024.md",
       "reports/luban-polish-report-20261020.md",
+      "reports/luban-state-integrity-20261025.md",
       "reports/prior-art-candidates.json",
       "reports/prior-art-research.md",
       "reports/skill-ir.json",

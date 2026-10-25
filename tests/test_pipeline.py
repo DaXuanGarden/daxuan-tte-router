@@ -8,6 +8,30 @@ from scripts.skill_registry import resolve_skill
 
 
 class PipelineTests(unittest.TestCase):
+    def _advance_to_pilot(self, workdir: Path) -> None:
+        init_run("先查心衰研究空白和文献，再决定是否进入 TTE 协议", workdir, [])
+        intake = workdir / "intake.md"
+        intake.write_text("临床决策", encoding="utf-8")
+        complete_phase(workdir, "intake", "intake.md", "")
+        record_evidence(
+            workdir,
+            "时间零点与治疗分配对齐",
+            "The treatment assignment and start of follow-up coincide.",
+            "https://example.org/methods",
+            "2026-10-25",
+            "方法学来源",
+            "verified",
+        )
+        evidence_map = json.loads((workdir / "evidence-map.json").read_text(encoding="utf-8"))
+        evidence_map["status"] = "completed"
+        (workdir / "evidence-map.json").write_text(json.dumps(evidence_map), encoding="utf-8")
+        complete_phase(workdir, "literature", "evidence-map.json", "")
+        for phase in ("gap_audit", "question_refinement", "data_support", "tte_protocol"):
+            artifact = workdir / f"{phase}.md"
+            artifact.write_text(phase, encoding="utf-8")
+            complete_phase(workdir, phase, artifact.name, "")
+        self.assertEqual(json.loads((workdir / "research-state.json").read_text())["current_phase"], "pilot")
+
     def test_registry_resolves_from_an_explicit_portable_root(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp) / "skills"
@@ -48,6 +72,28 @@ class PipelineTests(unittest.TestCase):
             self.assertEqual(len(result["ledger"]["records"]), 1)
             self.assertEqual(result["ledger"]["records"][0]["status"], "single-source")
 
+    def test_mixed_evidence_statuses_remain_in_progress(self):
+        with tempfile.TemporaryDirectory() as temp:
+            workdir = Path(temp) / "run"
+            init_run("先查文献，再决定 TTE 设计", workdir, [])
+            record_evidence(workdir, "第一条", "passage", "https://example.org/one", "2026-10-25", "single source", "single-source")
+            result = record_evidence(workdir, "第二条", "passage", "https://example.org/two", "2026-10-25", "verified source", "verified")
+            self.assertEqual(result["ledger"]["status"], "in_progress")
+
+    def test_pipeline_state_omits_machine_specific_resolution_paths(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp) / "skills"
+            skill = root / "target-trial" / "SKILL.md"
+            skill.parent.mkdir(parents=True)
+            skill.write_text("---\nname: target-trial\n---\n", encoding="utf-8")
+            workdir = Path(temp) / "run"
+            state = init_run("用 TTE 设计目标试验", workdir, [str(root)])
+            resolution = next(item for item in state["skill_resolution"] if item["name"] == "target-trial")
+            self.assertIsNone(resolution["path"])
+            self.assertEqual(resolution["searched_roots"], [])
+            self.assertEqual(resolution["path_scope"], "local-runtime-only")
+            self.assertNotIn(str(root), json.dumps(state, ensure_ascii=False))
+
     def test_literature_cannot_close_without_an_evidence_record(self):
         with tempfile.TemporaryDirectory() as temp:
             workdir = Path(temp) / "run"
@@ -64,13 +110,20 @@ class PipelineTests(unittest.TestCase):
     def test_pilot_and_feedback_update_next_action(self):
         with tempfile.TemporaryDirectory() as temp:
             workdir = Path(temp) / "run"
-            init_run("协议已冻结，先做 pilot 再估计 TTE", workdir, [])
+            self._advance_to_pilot(workdir)
             state = record_pilot(workdir, "proceed", "队列、暴露和结局均有可观测记录")
             self.assertEqual(state["current_phase"], "execution")
             state = record_feedback(workdir, "assumption_violation", "权重出现极端值", "回到数据支持阶段并重审共同支持")
             self.assertEqual(state["current_phase"], "feedback")
             self.assertEqual(state["next_action"], "回到数据支持阶段并重审共同支持")
             self.assertTrue((workdir / "feedback.jsonl").is_file())
+
+    def test_pilot_cannot_skip_required_phases(self):
+        with tempfile.TemporaryDirectory() as temp:
+            workdir = Path(temp) / "run"
+            init_run("协议已冻结，先做 pilot 再估计 TTE", workdir, [])
+            with self.assertRaisesRegex(SystemExit, "current_phase=pilot"):
+                record_pilot(workdir, "proceed", "跳过前置阶段")
 
     def test_complete_phase_requires_a_real_artifact_and_advances(self):
         with tempfile.TemporaryDirectory() as temp:

@@ -9,7 +9,7 @@ description: |
   project's clinical and data-semantic rules, including confounding/混杂 and positivity/共同支持. This skill routes work; it does not replace the specialist
   skills or turn teaching examples into executed clinical analyses.
 metadata:
-  version: "0.5.0"
+  version: "0.6.0"
   owner: "20260907_Clinical_Database"
   upstream: "TTE_CC by Jacob Jameson"
 ---
@@ -109,8 +109,9 @@ The pipeline creates `research-state.json`, `route-card.json`, `evidence-map.jso
 `pilot-report.md`, `feedback.md`, and a `handoffs/` directory. Initialization does not query a database,
 retrieve literature, or run an estimate. A full estimate requires a recorded pilot decision of `proceed`.
 Use `record-evidence` to save each load-bearing claim with its source passage, URL, date, independence note,
-and verification status. Use `complete-phase` only after the named artifact exists, and use `feedback` after each pilot or analysis
-to record whether the next action is a data repair, protocol revision, assumption review, or result follow-up.
+and verification status. `record-pilot` is valid only in the `pilot` phase; `proceed` follows all prior phase gates.
+Shared state omits paths; ledger is `verified` if all rows are verified.
+Use `complete-phase` after artifacts and `feedback` after each pilot or analysis.
 
 The script suggests routes; resolve them against the question, treatment, data, and specialist instructions.
 Return this route card:

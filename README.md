@@ -113,6 +113,11 @@ python3 scripts/pipeline.py record-evidence \
 
 文献阶段没有证据账本记录时，`complete-phase` 会停止，不能把空检索写成研究空白。
 
+### 状态完整性
+
+`record-pilot` 只能在前置阶段完成并进入 `pilot` 后执行；`proceed` 不会跳过协议和数据支持闸门。共享的
+`research-state.json` 只保留 Skill 解析状态，不写入本机绝对路径。账本只有在全部记录为 `verified` 时才标记为已核验。
+
 ## 心衰首个 Showcase
 
 当前优先回放的问题是：急性心衰患者仍有容量负荷、已接受静脉袢利尿剂并出现预先定义的肾功能恶化信号后，未来 24 小时维持还是降低利尿强度？
