@@ -49,6 +49,11 @@ class RouteTests(unittest.TestCase):
         self.assertEqual(result["selected"], ["time-zero", "sustained-strategies", "competing-events"])
         self.assertEqual(result["stage"], "emulation")
 
+    def test_heart_failure_diuresis_question_enters_design_route(self):
+        result = route("急性心衰患者在持续利尿后出现肾功能恶化时，维持还是降低利尿强度？")
+        self.assertEqual(result["selected"], ["time-zero", "sustained-strategies"])
+        self.assertEqual(result["stage"], "design")
+
     def test_sequential_cloning_routes_sustained_strategy(self):
         result = route("同一个人在多个入组时点可能属于两个策略，需要 sequential trial 和 cloning")
         self.assertEqual(result["selected"], ["target-trial", "time-zero", "sustained-strategies"])

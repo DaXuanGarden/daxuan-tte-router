@@ -256,6 +256,8 @@ TTE_DESIGN_SIGNAL = (
     "不死时间",
     "immortal time",
     "持续策略",
+    "持续利尿",
+    "利尿策略",
     "动态策略",
     "时变治疗",
     "time-varying treatment",
