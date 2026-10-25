@@ -100,6 +100,8 @@ RULES = (
             "维持",
             "减量",
             "停用",
+            "持续利尿",
+            "利尿策略",
             "治疗窗口",
             "剂量",
             "dose",
@@ -247,6 +249,19 @@ TTE_WORKFLOW_SIGNAL = (
     "clone-censor-weight",
     "克隆",
 )
+TTE_DESIGN_SIGNAL = (
+    "time-zero",
+    "time zero",
+    "时间零点",
+    "不死时间",
+    "immortal time",
+    "持续策略",
+    "动态策略",
+    "时变治疗",
+    "time-varying treatment",
+    "竞争事件",
+    "competing event",
+)
 WEAK_CAUSAL_SIGNAL = ("causal inference", "因果推断")
 DISCOVERY_SIGNAL = (
     "选题",
@@ -300,6 +315,7 @@ CLINICAL_CONTEXT = (
     "患者",
     "治疗",
     "药物",
+    "利尿",
     "结局",
     "死亡",
     "cardiovascular",
@@ -317,6 +333,13 @@ NON_TTE_ONLY = (
     "翻译",
     "普通文档",
     "ordinary document",
+)
+NON_TTE_NEGATION = (
+    "不涉及临床研究",
+    "不涉及 tte",
+    "not a clinical research",
+    "not clinical research",
+    "without tte",
 )
 
 DISCOVERY_SKILLS = (
@@ -412,6 +435,7 @@ def route(text: str) -> dict[str, object]:
 
     strong_hits = _contains(normalized, TTE_STRONG_SIGNAL)
     workflow_hits = _contains(normalized, TTE_WORKFLOW_SIGNAL)
+    design_hits = _contains(normalized, TTE_DESIGN_SIGNAL)
     weak_causal_hits = _contains(normalized, WEAK_CAUSAL_SIGNAL)
     discovery_hits = _contains(normalized, DISCOVERY_SIGNAL)
     stats_hits = _contains(normalized, STATS_SIGNAL)
@@ -423,6 +447,7 @@ def route(text: str) -> dict[str, object]:
         + ANALYSIS_CONTEXT_SIGNAL,
     )
     non_tte_hits = _contains(normalized, NON_TTE_ONLY)
+    non_tte_negation_hits = _contains(normalized, NON_TTE_NEGATION)
 
     clinical_causal = bool(weak_causal_hits and clinical_hits)
     research_signal = bool(
@@ -431,7 +456,10 @@ def route(text: str) -> dict[str, object]:
         or explicit_stage_hits
         or (discovery_hits and clinical_hits)
         or clinical_causal
+        or (design_hits and clinical_hits)
     )
+    if non_tte_negation_hits:
+        return _empty_result(normalized, "high")
     if non_tte_hits and not strong_hits and not workflow_hits:
         return _empty_result(normalized, "high")
     if not research_signal:
@@ -440,7 +468,7 @@ def route(text: str) -> dict[str, object]:
     literature_request = bool(discovery_hits)
     if literature_request:
         intent = "question_discovery"
-    elif explicit_stage_hits or strong_hits or workflow_hits:
+    elif explicit_stage_hits or strong_hits or workflow_hits or (design_hits and clinical_hits):
         if _contains(normalized, ("tte-estimate", "per-protocol", "intention-to-treat", "itt", "运行分析", "估计代码")):
             intent = "analysis"
         elif _contains(normalized, ("check-emulation", "共同支持", "overlap", "权重诊断", "负对照", "balance")):

@@ -38,6 +38,17 @@ class RouteTests(unittest.TestCase):
         self.assertEqual(result["selected"], [])
         self.assertIn("auto-inspire-causal-inference", result["supporting_skills"])
 
+    def test_explicit_non_clinical_tte_request_does_not_trigger(self):
+        result = route("只做一个普通的因果推断概念解释，不涉及临床研究或 TTE。")
+        self.assertEqual(result["intent"], "none")
+        self.assertEqual(result["stage"], "none")
+        self.assertEqual(result["selected"], [])
+
+    def test_clinical_time_zero_and_competing_event_review_triggers_tte(self):
+        result = route("审核这个研究的 time zero、持续利尿策略和竞争事件。")
+        self.assertEqual(result["selected"], ["time-zero", "sustained-strategies", "competing-events"])
+        self.assertEqual(result["stage"], "emulation")
+
     def test_sequential_cloning_routes_sustained_strategy(self):
         result = route("同一个人在多个入组时点可能属于两个策略，需要 sequential trial 和 cloning")
         self.assertEqual(result["selected"], ["target-trial", "time-zero", "sustained-strategies"])
