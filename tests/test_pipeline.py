@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.pipeline import complete_phase, init_run, record_evidence, record_feedback, record_pilot
+from scripts.pipeline import complete_phase, dispatch_run, init_run, record_evidence, record_feedback, record_pilot
 from scripts.skill_registry import resolve_skill
 
 
@@ -93,6 +93,37 @@ class PipelineTests(unittest.TestCase):
             self.assertEqual(resolution["searched_roots"], [])
             self.assertEqual(resolution["path_scope"], "local-runtime-only")
             self.assertNotIn(str(root), json.dumps(state, ensure_ascii=False))
+
+    def test_dispatch_writes_ordered_run_bundle(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp) / "skills"
+            skill = root / "target-trial" / "SKILL.md"
+            skill.parent.mkdir(parents=True)
+            skill.write_text("---\nname: target-trial\n---\n", encoding="utf-8")
+            workdir = Path(temp) / "run"
+            init_run("用 TTE 设计目标试验", workdir, [str(root)])
+            result = dispatch_run(workdir)
+            self.assertEqual(result["manifest"]["status"], "ready")
+            self.assertEqual(result["manifest"]["execution_boundary"], "handoff-only")
+            self.assertEqual(result["manifest"]["steps"][0]["name"], "target-trial")
+            self.assertTrue((workdir / "dispatch-manifest.json").is_file())
+            self.assertTrue((workdir / "run-bundle.md").is_file())
+            self.assertTrue((workdir / "handoffs" / "01-target-trial.md").is_file())
+            self.assertNotIn(str(root), (workdir / "run-bundle.md").read_text(encoding="utf-8"))
+
+    def test_dispatch_blocks_when_required_skill_is_missing(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp) / "empty-skills"
+            root.mkdir()
+            workdir = Path(temp) / "run"
+            init_run("用 TTE 设计目标试验", workdir, [str(root)])
+            state_path = workdir / "research-state.json"
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+            state["missing_required_skills"] = ["target-trial"]
+            state_path.write_text(json.dumps(state), encoding="utf-8")
+            result = dispatch_run(workdir)
+            self.assertEqual(result["manifest"]["status"], "blocked")
+            self.assertIn("target-trial", result["manifest"]["missing_required_skills"])
 
     def test_literature_cannot_close_without_an_evidence_record(self):
         with tempfile.TemporaryDirectory() as temp:

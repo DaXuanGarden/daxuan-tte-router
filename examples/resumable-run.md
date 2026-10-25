@@ -4,6 +4,7 @@
 python3 scripts/pipeline.py init \
   --text "先查心衰肾功能恶化后的利尿策略文献，再决定是否进入 TTE 协议" \
   --workdir ./tte-runs/heart-failure-renal-signal
+python3 scripts/pipeline.py dispatch --workdir ./tte-runs/heart-failure-renal-signal
 
 # 先写入并交接 intake 产物。
 cat > ./tte-runs/heart-failure-renal-signal/intake.md <<'EOF'

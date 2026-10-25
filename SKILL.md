@@ -9,7 +9,7 @@ description: |
   project's clinical and data-semantic rules, including confounding/混杂 and positivity/共同支持. This skill routes work; it does not replace the specialist
   skills or turn teaching examples into executed clinical analyses.
 metadata:
-  version: "0.6.0"
+  version: "0.7.0"
   owner: "20260907_Clinical_Database"
   upstream: "TTE_CC by Jacob Jameson"
 ---
@@ -105,8 +105,9 @@ python3 scripts/pipeline.py init \
 python3 scripts/pipeline.py status --workdir ./tte-runs/<run-name>
 ```
 
-The pipeline creates `research-state.json`, `route-card.json`, `evidence-map.json`, `evidence-ledger.json`, `design-card.json`,
-`pilot-report.md`, `feedback.md`, and a `handoffs/` directory. Initialization does not query a database,
+The pipeline creates state/cards and a `handoffs/` directory. Run `dispatch` to write
+`dispatch-manifest.json`, `run-bundle.md`, and ordered Skill handoffs; this is handoff-only.
+Initialization does not query a database,
 retrieve literature, or run an estimate. A full estimate requires a recorded pilot decision of `proceed`.
 Use `record-evidence` to save each load-bearing claim with its source passage, URL, date, independence note,
 and verification status. `record-pilot` is valid only in the `pilot` phase; `proceed` follows all prior phase gates.

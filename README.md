@@ -87,10 +87,12 @@ python3 scripts/pipeline.py init \
   --text "先查心衰肾功能恶化后的利尿策略文献，再决定是否进入 TTE 协议" \
   --workdir ./tte-runs/heart-failure-renal-signal
 python3 scripts/pipeline.py status --workdir ./tte-runs/heart-failure-renal-signal
+python3 scripts/pipeline.py dispatch --workdir ./tte-runs/heart-failure-renal-signal
 ```
 
 运行目录包含 `research-state.json`、`route-card.json`、`evidence-map.json`、`evidence-ledger.json`、`design-card.json`、
-`pilot-report.md`、`feedback.md` 和 `handoffs/`。完成每个阶段后用 `complete-phase` 写入真实产物；
+`dispatch-manifest.json`、`run-bundle.md`、`pilot-report.md`、`feedback.md` 和 `handoffs/`。`dispatch`
+只生成有序交接，不执行数据库查询或临床估计。完成每个阶段后用 `complete-phase` 写入真实产物；
 完整估计前必须用 `record-pilot --decision proceed` 记录队列、暴露、结局、时间零点、随访和重叠性检查。
 如果 pilot 需要改设计，使用 `downgrade`；如果数据不支持，使用 `stop`。分析或 pilot 后使用
 `feedback` 记录 `data_failure`、`design_failure`、`assumption_violation`、`null_result`、
@@ -147,6 +149,7 @@ question discovery → target-trial → time-zero → sustained-strategies
 - `scripts/route_tte.py`：无依赖的可重复初筛器。
 - `scripts/skill_registry.py`：按能力注册表解析已安装 Skill，不写死本机路径。
 - `scripts/pipeline.py`：创建、恢复和更新研究运行状态。
+- `dispatch-manifest.json` / `run-bundle.md`：记录有序 specialist handoff 和当前执行边界。
 - `evidence-ledger.json`：逐条保存主张到来源的可审计证据链。
 - `tests/test_route_tte.py`：路由边界测试。
 

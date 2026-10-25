@@ -24,6 +24,7 @@ class RouteTests(unittest.TestCase):
         self.assertIn("auto-inspire-paper-topic-discovery", result["supporting_skills"])
         self.assertEqual(len(result["evidence_tasks"]), 3)
         self.assertIn("evidence-ledger.json", result["pipeline"]["handoff_artifacts"])
+        self.assertIn("dispatch-manifest.json", result["pipeline"]["handoff_artifacts"])
 
     def test_literature_request_does_not_leak_strategy_keywords_to_tte(self):
         result = route("先查心衰肾功能恶化后利尿维持与减量的文献，再决定是否进入 TTE 协议")

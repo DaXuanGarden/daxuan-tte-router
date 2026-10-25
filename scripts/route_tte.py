@@ -591,6 +591,8 @@ def route(text: str) -> dict[str, object]:
                 "evidence-map.json",
                 "evidence-ledger.json",
                 "design-card.json",
+                "dispatch-manifest.json",
+                "run-bundle.md",
                 "pilot-report.md",
                 "feedback.md",
             ],

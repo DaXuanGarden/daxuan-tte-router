@@ -204,6 +204,103 @@ def init_run(text: str, workdir: Path, skills_roots: list[str]) -> dict[str, Any
     return state
 
 
+def dispatch_run(workdir: Path) -> dict[str, Any]:
+    """Write a reviewable specialist handoff bundle without executing analysis."""
+    state = _load_state(workdir)
+    route_card = state["route"]
+    names = list(dict.fromkeys(route_card["selected"] + route_card["supporting_skills"]))
+    resolutions = {item["name"]: item for item in route_card.get("skill_resolution", [])}
+    steps: list[dict[str, Any]] = []
+    handoffs: list[str] = []
+    for index, name in enumerate(names, start=1):
+        resolution = resolutions.get(name, {"name": name, "status": "unresolved", "required": False})
+        handoff = f"handoffs/{index:02d}-{name}.md"
+        step = {
+            "order": index,
+            "name": name,
+            "lane": resolution.get("lane", "unknown"),
+            "phase": resolution.get("phase", "unknown"),
+            "required": bool(resolution.get("required", False)),
+            "status": resolution.get("status", "unresolved"),
+            "handoff": handoff,
+            "reason": route_card.get("reasons", {}).get(name, {}).get("why", "selected by the route card"),
+        }
+        steps.append(step)
+        handoffs.append(handoff)
+        (workdir / handoff).write_text(
+            f"# Handoff {index:02d}: `{name}`\n\n"
+            f"- Lane: `{step['lane']}`\n"
+            f"- Phase: `{step['phase']}`\n"
+            f"- Resolution: **{step['status']}**\n"
+            f"- Why selected: {step['reason']}\n\n"
+            "Read the installed specialist Skill by this exact name, then record the resulting artifact "
+            "before advancing the research phase. This handoff does not execute a database query or clinical estimate.\n",
+            encoding="utf-8",
+        )
+    missing_required = list(state.get("missing_required_skills", []))
+    status = "blocked" if missing_required else "ready"
+    manifest = {
+        "schema_version": "1.0",
+        "run_id": state["run_id"],
+        "created_at": _now(),
+        "status": status,
+        "execution_boundary": "handoff-only",
+        "intent": route_card["intent"],
+        "stage": route_card["stage"],
+        "steps": steps,
+        "missing_required_skills": missing_required,
+        "artifacts": {
+            "route_card": "route-card.json",
+            "design_card": "design-card.json",
+            "evidence_ledger": "evidence-ledger.json",
+            "run_bundle": "run-bundle.md",
+            "handoffs": handoffs,
+        },
+        "next_action": (
+            "Install the missing required skills before dispatch can proceed."
+            if missing_required
+            else "Read the handoffs in order and record each phase artifact before advancing."
+        ),
+    }
+    _write_json(workdir / "dispatch-manifest.json", manifest)
+    bundle_lines = [
+        "# TTE run bundle",
+        "",
+        f"- Run: `{state['run_id']}`",
+        f"- Intent: `{route_card['intent']}`",
+        f"- Stage: `{route_card['stage']}`",
+        f"- Dispatch status: **{status}**",
+        f"- Execution boundary: `{manifest['execution_boundary']}`",
+        "",
+        "## Ordered handoffs",
+        "",
+        "| Order | Skill | Lane | Phase | Resolution | Handoff |",
+        "|---:|---|---|---|---|---|",
+    ]
+    for step in steps:
+        bundle_lines.append(
+            f"| {step['order']} | `{step['name']}` | `{step['lane']}` | `{step['phase']}` | "
+            f"{step['status']} | [{step['handoff']}]({step['handoff']}) |"
+        )
+    bundle_lines.extend(
+        [
+            "",
+            "## Next action",
+            "",
+            manifest["next_action"],
+            "",
+            "The bundle records routing and handoff state. It does not claim that literature retrieval, "
+            "database analysis, estimation, diagnostics, or reporting has been executed.",
+            "",
+        ]
+    )
+    (workdir / "run-bundle.md").write_text("\n".join(bundle_lines), encoding="utf-8")
+    state["history"].append({"at": manifest["created_at"], "event": "dispatch_planned", "status": status})
+    state["next_action"] = manifest["next_action"]
+    _save_state(workdir, state)
+    return {"manifest": manifest, "state": state}
+
+
 def record_pilot(workdir: Path, decision: str, notes: str) -> dict[str, Any]:
     if decision not in PILOT_DECISIONS:
         raise SystemExit(f"Pilot decision must be one of: {', '.join(sorted(PILOT_DECISIONS))}")
@@ -346,6 +443,9 @@ def main() -> int:
     status_parser = sub.add_parser("status", help="show a resumable run state")
     status_parser.add_argument("--workdir", required=True, type=Path)
 
+    dispatch_parser = sub.add_parser("dispatch", help="write an ordered specialist handoff bundle")
+    dispatch_parser.add_argument("--workdir", required=True, type=Path)
+
     pilot_parser = sub.add_parser("record-pilot", help="record proceed/downgrade/stop gate")
     pilot_parser.add_argument("--workdir", required=True, type=Path)
     pilot_parser.add_argument("--decision", required=True, choices=sorted(PILOT_DECISIONS))
@@ -377,6 +477,8 @@ def main() -> int:
         result = init_run(args.text, args.workdir, args.skills_root)
     elif args.command == "status":
         result = _load_state(args.workdir)
+    elif args.command == "dispatch":
+        result = dispatch_run(args.workdir)
     elif args.command == "record-pilot":
         result = record_pilot(args.workdir, args.decision, args.notes)
     elif args.command == "feedback":
