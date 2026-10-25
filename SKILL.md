@@ -9,12 +9,14 @@ description: |
   project's clinical and data-semantic rules, including confounding/混杂 and positivity/共同支持. This skill routes work; it does not replace the specialist
   skills or turn teaching examples into executed clinical analyses.
 metadata:
-  version: "0.4.0"
+  version: "0.5.0"
   owner: "20260907_Clinical_Database"
   upstream: "TTE_CC by Jacob Jameson"
 ---
 
 # Daxuan TTE Router
+
+用户可见术语写作 **TTE**；反引号内是精确上游标识符，规则见 `references/naming-conventions.md`。
 
 Use this package as the TTE workflow entry point. It routes a request to the existing
 TTE_CC specialist skills and keeps the clinical question, estimand, data mapping, and analysis stage aligned.
@@ -103,15 +105,15 @@ python3 scripts/pipeline.py init \
 python3 scripts/pipeline.py status --workdir ./tte-runs/<run-name>
 ```
 
-The pipeline creates `research-state.json`, `route-card.json`, `evidence-map.json`, `design-card.json`,
+The pipeline creates `research-state.json`, `route-card.json`, `evidence-map.json`, `evidence-ledger.json`, `design-card.json`,
 `pilot-report.md`, `feedback.md`, and a `handoffs/` directory. Initialization does not query a database,
 retrieve literature, or run an estimate. A full estimate requires a recorded pilot decision of `proceed`.
-Use `complete-phase` only after the named artifact exists, and use `feedback` after each pilot or analysis
+Use `record-evidence` to save each load-bearing claim with its source passage, URL, date, independence note,
+and verification status. Use `complete-phase` only after the named artifact exists, and use `feedback` after each pilot or analysis
 to record whether the next action is a data repair, protocol revision, assumption review, or result follow-up.
 
-The script is a keyword-based suggestion, not a clinical decision. Resolve its suggestions against the
-question, treatment decision, data semantics, and the specialist instructions. Return this route card in
-the response:
+The script suggests routes; resolve them against the question, treatment, data, and specialist instructions.
+Return this route card:
 
 ```text
 intent: question_discovery | protocol_design | emulation | analysis | checking | reporting
@@ -129,9 +131,7 @@ stop condition: <what must be true before the next stage>
 run status: suggested | consulted | drafted | executed | checked
 ```
 
-The route card prevents a draft protocol from being described as an executed analysis and makes the next
-handoff explicit. The script reports `selected: []` for ordinary writing, translation, or descriptive work
-without a causal TTE request. It reports supporting research skills separately from the eight TTE specialists.
+The route card separates draft from executed work and reports `selected: []` for non-TTE writing or descriptive work.
 
 ## Stage gates
 

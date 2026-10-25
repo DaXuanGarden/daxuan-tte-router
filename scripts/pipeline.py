@@ -40,6 +40,7 @@ FEEDBACK_CLASSES = {
     "positive_result",
     "pilot_failure",
 }
+EVIDENCE_STATUSES = {"verified", "single-source", "contested", "unverified"}
 
 
 def _now() -> str:
@@ -106,6 +107,22 @@ def _write_templates(workdir: Path, route_card: dict[str, Any]) -> None:
             "methods_examples": [],
             "boundary_examples": [],
             "novelty_status": "unverified",
+        },
+    )
+    _write_json(
+        workdir / "evidence-ledger.json",
+        {
+            "schema_version": "1.0",
+            "status": "not_started",
+            "records": [],
+            "required_fields": [
+                "claim",
+                "passage",
+                "source_url",
+                "source_date",
+                "independence_note",
+                "status",
+            ],
         },
     )
     _write_json(workdir / "design-card.json", route_card["design_card"])
@@ -223,6 +240,43 @@ def record_feedback(workdir: Path, classification: str, notes: str, next_action:
     return state
 
 
+def record_evidence(
+    workdir: Path,
+    claim: str,
+    passage: str,
+    source_url: str,
+    source_date: str,
+    independence_note: str,
+    status: str,
+) -> dict[str, Any]:
+    """Append one auditable source-to-claim row to the evidence ledger."""
+    if status not in EVIDENCE_STATUSES:
+        raise SystemExit(f"Evidence status must be one of: {', '.join(sorted(EVIDENCE_STATUSES))}")
+    if not source_url.startswith(("https://", "http://")):
+        raise SystemExit("source_url must start with http:// or https://")
+    if not all(value.strip() for value in (claim, passage, source_date, independence_note)):
+        raise SystemExit("claim, passage, source_date, and independence_note are required")
+    state = _load_state(workdir)
+    ledger_path = workdir / "evidence-ledger.json"
+    ledger = _read_json(ledger_path)
+    record = {
+        "claim": claim.strip(),
+        "passage": passage.strip(),
+        "source_url": source_url.strip(),
+        "source_date": source_date.strip(),
+        "independence_note": independence_note.strip(),
+        "status": status,
+        "recorded_at": _now(),
+    }
+    ledger["records"].append(record)
+    ledger["status"] = "verified" if status == "verified" else "in_progress"
+    _write_json(ledger_path, ledger)
+    state["history"].append({"at": record["recorded_at"], "event": "evidence_recorded", "status": status})
+    state["next_action"] = "Continue the evidence review and complete the gap audit before freezing the TTE protocol."
+    _save_state(workdir, state)
+    return {"record": record, "ledger": ledger, "state": state}
+
+
 def complete_phase(workdir: Path, phase_name: str, artifact: str, notes: str) -> dict[str, Any]:
     if phase_name not in PHASES:
         raise SystemExit(f"Unknown phase: {phase_name}")
@@ -234,6 +288,10 @@ def complete_phase(workdir: Path, phase_name: str, artifact: str, notes: str) ->
         if evidence.get("status") == "not_started":
             raise SystemExit("evidence-map.json is still the initialization template; record verified searches first")
     state = _load_state(workdir)
+    if phase_name == "literature":
+        ledger_path = workdir / "evidence-ledger.json"
+        if not ledger_path.is_file() or not _read_json(ledger_path).get("records"):
+            raise SystemExit("evidence-ledger.json has no source-to-claim records; record evidence before closing literature")
     if state["current_phase"] != phase_name:
         raise SystemExit(f"Current phase is {state['current_phase']}; complete that phase before {phase_name}")
     phase = state["phases"][phase_name]
@@ -279,6 +337,15 @@ def main() -> int:
     feedback_parser.add_argument("--notes", default="")
     feedback_parser.add_argument("--next-action", required=True)
 
+    evidence_parser = sub.add_parser("record-evidence", help="append one source-to-claim evidence row")
+    evidence_parser.add_argument("--workdir", required=True, type=Path)
+    evidence_parser.add_argument("--claim", required=True)
+    evidence_parser.add_argument("--passage", required=True)
+    evidence_parser.add_argument("--source-url", required=True)
+    evidence_parser.add_argument("--source-date", required=True)
+    evidence_parser.add_argument("--independence-note", required=True)
+    evidence_parser.add_argument("--status", required=True, choices=sorted(EVIDENCE_STATUSES))
+
     complete_parser = sub.add_parser("complete-phase", help="record a phase artifact and advance state")
     complete_parser.add_argument("--workdir", required=True, type=Path)
     complete_parser.add_argument("--phase", required=True, choices=PHASES)
@@ -294,6 +361,16 @@ def main() -> int:
         result = record_pilot(args.workdir, args.decision, args.notes)
     elif args.command == "feedback":
         result = record_feedback(args.workdir, args.classification, args.notes, args.next_action)
+    elif args.command == "record-evidence":
+        result = record_evidence(
+            args.workdir,
+            args.claim,
+            args.passage,
+            args.source_url,
+            args.source_date,
+            args.independence_note,
+            args.status,
+        )
     else:
         result = complete_phase(args.workdir, args.phase, args.artifact, args.notes)
     print(json.dumps(result, ensure_ascii=False, indent=2))

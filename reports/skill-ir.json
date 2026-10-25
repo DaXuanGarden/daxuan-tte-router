@@ -1,9 +1,9 @@
 {
   "schema_version": "2.0.0-qiaomu-lite",
-  "generated_at": "2026-10-24",
+  "generated_at": "2026-10-25",
   "package": {
     "name": "daxuan-tte-router",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "owner": "20260907_Clinical_Database",
     "maturity_tier": "library",
     "lifecycle_stage": "evidence-gated-research-pipeline",
@@ -85,6 +85,7 @@
       "references/estimand-card.md",
       "references/heart-failure-data-support.md",
       "references/maintenance.md",
+      "references/naming-conventions.md",
       "references/project-adapters.md",
       "references/route-card.md",
       "references/routing-map.md",
@@ -101,6 +102,7 @@
     ],
     "reports": [
       "reports/creation-handoff.md",
+      "reports/luban-evidence-ledger-20261025.md",
       "reports/luban-pipeline-upgrade-20261024.md",
       "reports/luban-polish-report-20261020.md",
       "reports/prior-art-candidates.json",

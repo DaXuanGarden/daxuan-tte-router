@@ -589,6 +589,7 @@ def route(text: str) -> dict[str, object]:
             "handoff_artifacts": [
                 "route-card.json",
                 "evidence-map.json",
+                "evidence-ledger.json",
                 "design-card.json",
                 "pilot-report.md",
                 "feedback.md",

@@ -2,6 +2,8 @@
 
 > 把“我想研究什么”变成一张有文献依据、estimand、数据缺口和 TTE Skill 交接的研究设计路线图。
 
+面向用户的名称统一写作 **TTE**；`target-trial`、`tte-estimate` 等是上游 Skill 的精确标识符，保持原样以确保安装和路由兼容。详见 [naming-conventions.md](references/naming-conventions.md)。
+
 这是本项目 TTE_CC 工具包的总入口。它先判断请求处于选题/文献反思、协议设计、仿真、估计、检查还是报告阶段，再选择最小的 TTE specialist 和必要的研究支持 Skill。`scripts/pipeline.py` 在此基础上提供可恢复的研究运行目录、阶段交接和 pilot 门禁。
 
 ## 你什么时候需要它？
@@ -87,12 +89,29 @@ python3 scripts/pipeline.py init \
 python3 scripts/pipeline.py status --workdir ./tte-runs/heart-failure-renal-signal
 ```
 
-运行目录包含 `research-state.json`、`route-card.json`、`evidence-map.json`、`design-card.json`、
+运行目录包含 `research-state.json`、`route-card.json`、`evidence-map.json`、`evidence-ledger.json`、`design-card.json`、
 `pilot-report.md`、`feedback.md` 和 `handoffs/`。完成每个阶段后用 `complete-phase` 写入真实产物；
 完整估计前必须用 `record-pilot --decision proceed` 记录队列、暴露、结局、时间零点、随访和重叠性检查。
 如果 pilot 需要改设计，使用 `downgrade`；如果数据不支持，使用 `stop`。分析或 pilot 后使用
 `feedback` 记录 `data_failure`、`design_failure`、`assumption_violation`、`null_result`、
 `positive_result` 或 `pilot_failure`，并写明下一步动作。
+
+### 证据账本
+
+每条影响研究问题或 estimand 的主张都应写入 `evidence-ledger.json`。记录至少包括主张、原文片段、来源 URL、来源日期、独立性说明和验证状态：
+
+```bash
+python3 scripts/pipeline.py record-evidence \
+  --workdir ./tte-runs/heart-failure-renal-signal \
+  --claim "研究中的治疗决策发生在预先定义的时间零点" \
+  --passage "<从原始来源实际读取的支持片段>" \
+  --source-url "https://example.org/source" \
+  --source-date "2026-10-25" \
+  --independence-note "方法学来源；尚未与临床队列研究交叉验证" \
+  --status single-source
+```
+
+文献阶段没有证据账本记录时，`complete-phase` 会停止，不能把空检索写成研究空白。
 
 ## 心衰首个 Showcase
 
@@ -123,6 +142,7 @@ question discovery → target-trial → time-zero → sustained-strategies
 - `scripts/route_tte.py`：无依赖的可重复初筛器。
 - `scripts/skill_registry.py`：按能力注册表解析已安装 Skill，不写死本机路径。
 - `scripts/pipeline.py`：创建、恢复和更新研究运行状态。
+- `evidence-ledger.json`：逐条保存主张到来源的可审计证据链。
 - `tests/test_route_tte.py`：路由边界测试。
 
 ## 校验

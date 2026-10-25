@@ -16,6 +16,16 @@ python3 scripts/pipeline.py complete-phase \
   --notes "临床决策已记录"
 
 # 完成真实检索后，先把 evidence-map.json 的 status 改为 completed 并填入来源，
+# 同时用 record-evidence 为每条关键主张建立 source-to-claim 记录。
+python3 scripts/pipeline.py record-evidence \
+  --workdir ./tte-runs/heart-failure-renal-signal \
+  --claim "<一个可被该来源直接支持的研究主张>" \
+  --passage "<从原始来源实际读取的原文片段>" \
+  --source-url "https://example.org/source" \
+  --source-date "2026-10-25" \
+  --independence-note "<说明该来源与其他证据是否独立>" \
+  --status single-source
+
 # 再用 complete-phase 记录 literature 阶段的交接。
 python3 scripts/pipeline.py complete-phase \
   --workdir ./tte-runs/heart-failure-renal-signal \
